@@ -17,7 +17,7 @@ import com.example.newdiary.Data.EntryRecyclerViewAdapter;
 import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
 
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -110,8 +110,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
-                selectedDate = sdf.format(new Date(calendarView.getDate()));
+                DateFormat dateFormat = DateFormat.getDateInstance();
+                long calendarDate = calendarView.getDate();
+                selectedDate = dateFormat.format(new Date(calendarDate));
 
                 Intent intent = new Intent(MainActivity.this, NewEntryActivity.class);
                 intent.putExtra("date", selectedDate);

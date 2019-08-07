@@ -61,6 +61,7 @@ public class NewEntryActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // Save new entry to database
     private void saveEntryToDb() {
 
         Entry entry = new Entry();

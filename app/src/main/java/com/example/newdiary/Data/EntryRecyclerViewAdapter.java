@@ -8,13 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.newdiary.Activities.EntryDetailActivity;
 import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class EntryRecyclerViewAdapter extends RecyclerView.Adapter<EntryRecyclerViewAdapter.ViewHolder> {
@@ -80,6 +78,7 @@ public class EntryRecyclerViewAdapter extends RecyclerView.Adapter<EntryRecycler
             date = itemView.findViewById(R.id.entryRowDateId);
             text = itemView.findViewById(R.id.entryTextId);
 
+            // Go to detailed entry page when an entry is clicked on
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

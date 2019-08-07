@@ -9,9 +9,10 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="0dp"
-        android:layout_marginBottom="6dp"
-        app:cardCornerRadius="20dp">
+        app:cardElevation="5dp"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="10dp"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -27,7 +28,8 @@
                 android:paddingTop="5dp"
                 android:textStyle="bold"
                 android:textSize="13sp"
-                android:text="mm/dd/yyyy"/>
+                android:text="mm/dd/yyyy"
+                android:fontFamily="@font/kingthings"/>
 
             <TextView
                 android:id="@+id/entryTitleId"
@@ -35,9 +37,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/entryRowDateId"
                 android:paddingLeft="15dp"
+                android:paddingTop="8dp"
                 android:textStyle="bold"
-                android:textSize="13sp"
-                android:text="Title"/>
+                android:textSize="20sp"
+                android:text="Title"
+                android:fontFamily="@font/kingthings"/>
 
             <TextView
                 android:id="@+id/entryTextId"
@@ -45,10 +49,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/entryTitleId"
                 android:paddingLeft="15dp"
-                android:paddingTop="5dp"
-                android:textSize="11sp"
+                android:paddingTop="15dp"
+                android:textSize="15sp"
                 android:lineSpacingExtra="3dp"
-                android:text="entry text"/>
+                android:text="entry text"
+                android:fontFamily="@font/kingthings"
+                />
 
 
         </RelativeLayout>
