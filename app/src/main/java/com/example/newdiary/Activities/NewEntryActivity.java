@@ -13,6 +13,8 @@ import com.example.newdiary.Data.DatabaseHandler;
 import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
 
+import java.util.ArrayList;
+
 public class NewEntryActivity extends AppCompatActivity {
 
     private String entryDate;
