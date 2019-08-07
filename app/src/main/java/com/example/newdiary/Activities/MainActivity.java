@@ -8,9 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.Toast;
 
 import com.example.newdiary.Data.DatabaseHandler;
 import com.example.newdiary.Data.EntryRecyclerViewAdapter;
@@ -18,6 +21,7 @@ import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private EntryRecyclerViewAdapter entryRecyclerViewAdapter;
     private DatabaseHandler databaseHandler;
+    private CalendarView calendarView;
 
     private String selectedDate;
 
@@ -53,6 +58,27 @@ public class MainActivity extends AppCompatActivity {
 
         refreshData();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+
+    }
+
+    // Opening Search alert dialog from menu Search button
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.settings) {
+
+            Toast.makeText(getApplicationContext(), "settings button clicked", Toast.LENGTH_LONG).show();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -100,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         View view = getLayoutInflater().inflate(R.layout.dialog_view, null);
 
         Button okButton = view.findViewById(R.id.okButtonId);
-        final CalendarView calendarView = view.findViewById(R.id.calendarId);
+        calendarView = view.findViewById(R.id.calendarId);
 
         alertDialogBuilder.setView(view);
         dialog = alertDialogBuilder.create();
@@ -110,9 +136,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                DateFormat dateFormat = DateFormat.getDateInstance();
-                long calendarDate = calendarView.getDate();
-                selectedDate = dateFormat.format(new Date(calendarDate));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+                selectedDate = simpleDateFormat.format(calendarView.getDate());
+
+                Toast.makeText(getApplicationContext(), selectedDate, Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(MainActivity.this, NewEntryActivity.class);
                 intent.putExtra("date", selectedDate);
