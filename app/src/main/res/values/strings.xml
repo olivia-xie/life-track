@@ -5,4 +5,5 @@
     <string name="ok">Ok</string>
     <string name="title_activity_new_entry">NewEntryActivity</string>
     <string name="Title">Title</string>
+    <string name="title_activity_entry_detail">EntryDetailActivity</string>
 </resources>

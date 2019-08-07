@@ -5,7 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.constraint.ConstraintLayout;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.newdiary.Models.Entry;
 
@@ -16,9 +18,11 @@ import java.util.Date;
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     private final ArrayList<Entry> entryList = new ArrayList<>();
+    private Context context;
 
     public DatabaseHandler(Context context) {
         super(context, Constants.DATABASE_NAME, null, Constants.DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override

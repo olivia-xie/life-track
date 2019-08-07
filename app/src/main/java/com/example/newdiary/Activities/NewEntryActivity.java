@@ -13,8 +13,6 @@ import com.example.newdiary.Data.DatabaseHandler;
 import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
 
-import java.util.ArrayList;
-
 public class NewEntryActivity extends AppCompatActivity {
 
     private String entryDate;
@@ -45,7 +43,7 @@ public class NewEntryActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_save, menu);
         return true;
 
     }
@@ -57,7 +55,6 @@ public class NewEntryActivity extends AppCompatActivity {
 
         if (id == R.id.save_entry) {
 
-            Toast.makeText(getApplicationContext(), "save button clicked.", Toast.LENGTH_LONG).show();
             saveEntryToDb();
         }
 
@@ -72,7 +69,7 @@ public class NewEntryActivity extends AppCompatActivity {
 
         if (title.length() == 0 || text.length() == 0) {
 
-            Toast.makeText(getApplicationContext(), "Entry cannot be empty.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Entry or title cannot be empty.", Toast.LENGTH_LONG).show();
 
         } else {
 

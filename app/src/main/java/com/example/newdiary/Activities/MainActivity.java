@@ -74,11 +74,13 @@ public class MainActivity extends AppCompatActivity {
             String title = entriesFromDB.get(i).getTitle();
             String date = entriesFromDB.get(i).getDate();
             String entryText = entriesFromDB.get(i).getText();
+            int entryId = entriesFromDB.get(i).getEntryId();
 
             myEntry = new Entry();
             myEntry.setTitle(title);
             myEntry.setDate(date);
             myEntry.setText(entryText);
+            myEntry.setEntryId(entryId);
 
             entriesList.add(myEntry);
         }

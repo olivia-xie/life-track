@@ -1,6 +1,8 @@
 package com.example.newdiary.Models;
 
-public class Entry {
+import java.io.Serializable;
+
+public class Entry implements Serializable {
 
     private String text;
     private String date;

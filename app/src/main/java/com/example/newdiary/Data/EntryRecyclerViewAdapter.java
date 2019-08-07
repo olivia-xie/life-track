@@ -1,6 +1,7 @@
 package com.example.newdiary.Data;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.newdiary.Activities.EntryDetailActivity;
 import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class EntryRecyclerViewAdapter extends RecyclerView.Adapter<EntryRecyclerViewAdapter.ViewHolder> {
@@ -81,7 +84,11 @@ public class EntryRecyclerViewAdapter extends RecyclerView.Adapter<EntryRecycler
                 @Override
                 public void onClick(View v) {
 
-                    Toast.makeText(context, "row clicked", Toast.LENGTH_LONG).show();
+                    Entry clickedEntry = entryList.get(getAdapterPosition());
+
+                    Intent intent = new Intent(context, EntryDetailActivity.class);
+                    intent.putExtra("clickedEntry", clickedEntry);
+                    ctx.startActivity(intent);
 
                 }
             });
