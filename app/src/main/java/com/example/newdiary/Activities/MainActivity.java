@@ -13,23 +13,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.Toast;
 
 import com.example.newdiary.Data.DatabaseHandler;
 import com.example.newdiary.Data.EntryRecyclerViewAdapter;
 import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AlertDialog.Builder alertDialogBuilder;
-    private AlertDialog dialog;
+    private AlertDialog.Builder calendarAlertDialogBuilder;
+    private AlertDialog.Builder settingsAlertDialogBuilder;
+    private AlertDialog calendarDialog;
+    private AlertDialog settingsDialog;
     private Entry myEntry;
     private ArrayList<Entry> entriesList = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -68,14 +67,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // Opening Search alert dialog from menu Search button
+    // Opening Search alert calendarDialog from menu Search button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.settings) {
 
-            Toast.makeText(getApplicationContext(), "settings button clicked", Toast.LENGTH_LONG).show();
+            openSettingsDialog();
         }
 
         return super.onOptionsItemSelected(item);
@@ -119,20 +118,35 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // Shows calendar dialog when new entry button is pressed
+    // Shows settings calendarDialog where user can add passcode protection
+    public void openSettingsDialog() {
+
+        settingsAlertDialogBuilder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.settings_dialog_view, null);
+
+        settingsAlertDialogBuilder.setView(view);
+        settingsDialog = settingsAlertDialogBuilder.create();
+        settingsDialog.show();
+
+    }
+
+    // Shows calendar calendarDialog when new entry button is pressed
     public void showCalendarDialog() {
 
-        alertDialogBuilder = new AlertDialog.Builder(this);
-        View view = getLayoutInflater().inflate(R.layout.dialog_view, null);
+        calendarAlertDialogBuilder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.calendar_dialog_view, null);
 
         Button okButton = view.findViewById(R.id.okButtonId);
         calendarView = view.findViewById(R.id.calendarId);
 
-        alertDialogBuilder.setView(view);
-        dialog = alertDialogBuilder.create();
-        dialog.show();
+        calendarAlertDialogBuilder.setView(view);
+        calendarDialog = calendarAlertDialogBuilder.create();
+        calendarDialog.show();
 
-        // Getting selected date from calendar dialog
+        SimpleDateFormat format = new SimpleDateFormat("MMM dd, yyyy");
+        selectedDate = format.format(calendarView.getDate());
+
+        // Getting selected date from calendar calendarDialog
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
@@ -154,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, NewEntryActivity.class);
                 intent.putExtra("date", selectedDate);
 
-                dialog.dismiss();
+                calendarDialog.dismiss();
                 startActivity(intent);
             }
         });

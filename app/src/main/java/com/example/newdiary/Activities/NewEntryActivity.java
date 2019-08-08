@@ -80,8 +80,6 @@ public class NewEntryActivity extends AppCompatActivity {
             entry.setText(text);
             entry.setDate(date);
 
-            Toast.makeText(getApplicationContext(), date, Toast.LENGTH_LONG).show();
-
             dbHandler.addEntry(entry);
             dbHandler.close();
 

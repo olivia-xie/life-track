@@ -19,13 +19,14 @@
                 android:text="@string/choose_date"
                 android:textStyle="bold"
                 android:textSize="16sp"
+                android:fontFamily="@font/kingthings"
                 android:layout_height="wrap_content"/>
 
             <CalendarView
                 android:id="@+id/calendarId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/titleTextId"></CalendarView>
+                android:layout_below="@id/titleTextId"/>
 
             <Button
                 android:id="@+id/okButtonId"
@@ -35,7 +36,8 @@
                 android:textStyle="bold"
                 android:background="@color/colorAccent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kingthings"/>
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
