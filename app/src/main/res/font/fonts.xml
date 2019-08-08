@@ -2,9 +2,9 @@
 <font-family xmlns:android="http://schemas.android.com/apk/res/android">
 
     <font
+        android:font="@font/kingthings"
         android:fontStyle="normal"
-        android:fontWeight="400"
-        android:font="@font/kingthings" />
+        android:fontWeight="400" />
 
 
 </font-family>

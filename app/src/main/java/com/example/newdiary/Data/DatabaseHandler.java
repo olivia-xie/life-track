@@ -5,15 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.constraint.ConstraintLayout;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.example.newdiary.Models.Entry;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
@@ -31,7 +26,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // Create entries database table
         String CREATE_TABLE = "CREATE TABLE " + Constants.TABLE_NAME + "("
                 + Constants.KEY_ID + " INTEGER PRIMARY KEY, " + Constants.ENTRY_TITLE +
-                " TEXT, " + Constants.ENTRY_TEXT + " TEXT, " + Constants.DATE_NAME + " LONG);";
+                " TEXT, " + Constants.ENTRY_TEXT + " TEXT, " + Constants.DATE_NAME + " TEXT);";
 
         db.execSQL(CREATE_TABLE);
     }
@@ -80,7 +75,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(Constants.ENTRY_TITLE, entry.getTitle());
         values.put(Constants.ENTRY_TEXT, entry.getText());
-        values.put(Constants.DATE_NAME, System.currentTimeMillis());
+        values.put(Constants.DATE_NAME, entry.getDate());
 
         db.insert(Constants.TABLE_NAME, null, values);
 
@@ -88,7 +83,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Get all entries
-    public ArrayList<Entry> getEntries(){
+    public ArrayList<Entry> getEntries() {
 
         entryList.clear();
 
@@ -106,12 +101,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 entry.setTitle(cursor.getString(cursor.getColumnIndex(Constants.ENTRY_TITLE)));
                 entry.setText(cursor.getString(cursor.getColumnIndex(Constants.ENTRY_TEXT)));
                 entry.setEntryId(cursor.getInt(cursor.getColumnIndex(Constants.KEY_ID)));
-
-
-                DateFormat dateFormat = DateFormat.getDateInstance();
-                String date = dateFormat.format(new Date(cursor.getLong(cursor.getColumnIndex(Constants.DATE_NAME))).getTime());
-
-                entry.setDate(date);
+                entry.setDate(cursor.getString(cursor.getColumnIndex(Constants.DATE_NAME)));
 
                 entryList.add(entry);
 

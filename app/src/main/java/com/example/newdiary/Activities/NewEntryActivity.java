@@ -3,6 +3,7 @@ package com.example.newdiary.Activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextPaint;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -65,8 +66,9 @@ public class NewEntryActivity extends AppCompatActivity {
     private void saveEntryToDb() {
 
         Entry entry = new Entry();
-        String title = titleEditText.getText().toString().trim();
-        String text = entryEditText.getText().toString().trim();
+        String date = dateTextView.getText().toString();
+        String title = titleEditText.getText().toString();
+        String text = entryEditText.getText().toString();
 
         if (title.length() == 0 || text.length() == 0) {
 
@@ -76,6 +78,9 @@ public class NewEntryActivity extends AppCompatActivity {
 
             entry.setTitle(title);
             entry.setText(text);
+            entry.setDate(date);
+
+            Toast.makeText(getApplicationContext(), date, Toast.LENGTH_LONG).show();
 
             dbHandler.addEntry(entry);
             dbHandler.close();

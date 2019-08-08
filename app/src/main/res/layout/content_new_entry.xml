@@ -12,25 +12,29 @@
         android:id="@+id/entryDateId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/kingthings"
         android:padding="15dp"
-        android:text="mm/dd/yyyy"/>
+        android:text="mm/dd/yyyy" />
 
     <EditText
         android:id="@+id/titleEditTextId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/entryDateId"
+        android:layout_below="@id/entryDateId"
+        android:background="@null"
+        android:fontFamily="@font/kingthings"
         android:hint="@string/Title"
-        android:padding="15dp"/>
+        android:padding="15dp" />
 
     <EditText
         android:id="@+id/entryEditTextId"
         android:layout_width="match_parent"
         android:layout_height="550dp"
-        android:padding="15dp"
-        android:layout_below="@id/entryDateId"
+        android:layout_below="@id/titleEditTextId"
+        android:fontFamily="@font/kingthings"
+        android:gravity="top|left"
         android:hint="How was your day today?"
-        android:gravity="top|left"/>
+        android:padding="15dp" />
 
 
 </RelativeLayout>

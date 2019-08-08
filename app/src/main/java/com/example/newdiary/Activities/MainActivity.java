@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private EntryRecyclerViewAdapter entryRecyclerViewAdapter;
     private DatabaseHandler databaseHandler;
     private CalendarView calendarView;
-
     private String selectedDate;
 
     @Override
@@ -147,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Starting new entry activity when ok button is clicked
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
