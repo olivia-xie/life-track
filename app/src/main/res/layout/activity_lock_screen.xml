@@ -6,24 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".Activities.LockScreenActivity">
 
-    <EditText
-        android:id="@+id/passwordEnterId"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="pin"
-        android:inputType="numberPassword"
+        android:layout_above="@id/indicatorDotsId"
         android:layout_centerHorizontal="true"
-        />
+        android:fontFamily="@font/kingthings"
+        android:paddingBottom="40dp"
+        android:text="@string/enter_pin"
+        android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/button"
+    <com.andrognito.pinlockview.IndicatorDots
+        android:id="@+id/indicatorDotsId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="enter"
-        android:layout_below="@id/passwordEnterId"
-        android:layout_centerHorizontal="true"/>
+        android:layout_above="@id/pinLockViewId"
+        android:layout_centerHorizontal="true"
+        app:dotDiameter="12dp"
+        app:dotEmptyBackground="@drawable/ic_action_panorama_fish_eye"
+        app:dotFilledBackground="@drawable/ic_action_lens" />
 
-
+    <com.andrognito.pinlockview.PinLockView
+        android:id="@+id/pinLockViewId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingTop="20dp"
+        app:keypadTextColor="@android:color/black"
+        app:pinLength="4" />
 
 
 </RelativeLayout>

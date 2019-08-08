@@ -19,7 +19,8 @@
                 android:layout_centerHorizontal="true"
                 android:text="@string/settings"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:fontFamily="@font/kingthings"/>
 
             <TextView
                 android:id="@+id/passcodeTextId"
