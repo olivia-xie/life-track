@@ -28,10 +28,13 @@ public class LockScreenActivity extends AppCompatActivity {
         pinLockView = findViewById(R.id.pinLockViewId);
         indicatorDots = findViewById(R.id.indicatorDotsId);
 
+        // Attaching indicator dots to pin lock view
         pinLockView.attachIndicatorDots(indicatorDots);
-        indicatorDots.setIndicatorType(IndicatorDots.IndicatorType.FILL_WITH_ANIMATION);
+        indicatorDots.setIndicatorType(IndicatorDots.IndicatorType.FIXED);
 
+        // Lock screen pin pad listener
         pinLockView.setPinLockListener(new PinLockListener() {
+
             @Override
             public void onComplete(String pin) {
 
@@ -55,6 +58,7 @@ public class LockScreenActivity extends AppCompatActivity {
 
     }
 
+    // Prevents user from bypassing the lock screen activity
     @Override
     public void onBackPressed() {
 

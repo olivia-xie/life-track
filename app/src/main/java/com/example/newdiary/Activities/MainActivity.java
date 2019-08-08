@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPrefs = new SharedPrefs(MainActivity.this);
 
+        // Checks if lock screen has been enabled by user and starts lock screen activity if true
         if (sharedPrefs.getPasscodeOption()) {
             Intent intent = new Intent(MainActivity.this, LockScreenActivity.class);
             intent.putExtra("actualPIN", sharedPrefs.getPasscode());
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Button to create new diary entry
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // Shows settings calendarDialog where user can add passcode protection
+    // Shows settings alert dialog where user can add passcode protection
     public void openSettingsDialog() {
 
         // Getting switch on/off preferences
@@ -170,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // Creates dialog for user to set a new pin code
     public void createPasswordDialog() {
 
         passcodeAlertDialogBuilder = new AlertDialog.Builder(this);
@@ -186,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
         confirmEditText = v.findViewById(R.id.confirmEditTextId);
         setPasscodeButton = v.findViewById(R.id.setButtonId);
 
+        // Verify if the new PIN is a valid PIN and sets the PIN if so
         setPasscodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

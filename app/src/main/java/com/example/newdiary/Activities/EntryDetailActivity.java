@@ -48,7 +48,7 @@ public class EntryDetailActivity extends AppCompatActivity {
 
     }
 
-    // Opening Search alert dialog from menu Search button
+    // Opening delete alert dialog from menu delete button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
