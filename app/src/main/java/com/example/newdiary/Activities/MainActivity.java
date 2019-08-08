@@ -23,6 +23,7 @@ import com.example.newdiary.R;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
@@ -132,14 +133,23 @@ public class MainActivity extends AppCompatActivity {
         dialog = alertDialogBuilder.create();
         dialog.show();
 
+        // Getting selected date from calendar dialog
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, dayOfMonth);
+                long dateMilli = calendar.getTimeInMillis();
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+                selectedDate = simpleDateFormat.format(dateMilli);
+            }
+        });
+
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy");
-                selectedDate = simpleDateFormat.format(calendarView.getDate());
-
-                Toast.makeText(getApplicationContext(), selectedDate, Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(MainActivity.this, NewEntryActivity.class);
                 intent.putExtra("date", selectedDate);
