@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -31,8 +32,10 @@ public class MainActivity extends AppCompatActivity {
 
     private AlertDialog.Builder calendarAlertDialogBuilder;
     private AlertDialog.Builder settingsAlertDialogBuilder;
+    private AlertDialog.Builder passcodeAlertDialogBuilder;
     private AlertDialog calendarDialog;
     private AlertDialog settingsDialog;
+    private AlertDialog passcodeDialog;
     private Entry myEntry;
     private ArrayList<Entry> entriesList = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -40,9 +43,19 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseHandler databaseHandler;
     private CalendarView calendarView;
     private String selectedDate;
+    private SharedPrefs sharedPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        sharedPrefs = new SharedPrefs(MainActivity.this);
+
+        if (sharedPrefs.getPasscodeOption()) {
+            Intent intent = new Intent(MainActivity.this, LockScreenActivity.class);
+            intent.putExtra("actualPIN", sharedPrefs.getPasscode());
+            startActivity(intent);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -71,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // Opening Search alert calendarDialog from menu Search button
+    // Opening calendar dialog from menu Search button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -90,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         refreshData();
     }
 
+    // Refresh database to reflect changes such as added/deleted entries
     private void refreshData() {
 
         entriesList.clear();
@@ -125,9 +139,10 @@ public class MainActivity extends AppCompatActivity {
     // Shows settings calendarDialog where user can add passcode protection
     public void openSettingsDialog() {
 
-        final SharedPrefs sharedPrefs = new SharedPrefs(MainActivity.this);
+        // Getting switch on/off preferences
         boolean passcodeOption = sharedPrefs.getPasscodeOption();
 
+        // Showing alert dialog
         settingsAlertDialogBuilder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.settings_dialog_view, null);
 
@@ -138,13 +153,64 @@ public class MainActivity extends AppCompatActivity {
         Switch passcodeSwitch = view.findViewById(R.id.passcodeSwitchId);
         passcodeSwitch.setChecked(passcodeOption);
 
+        // Saving toggle button preferences
         passcodeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    sharedPrefs.setPasscodeOption(true);
+                if (isChecked) {
+
+                    settingsDialog.dismiss();
+
+                    createPasswordDialog();
+
                 } else {
                     sharedPrefs.setPasscodeOption(false);
+                }
+            }
+        });
+    }
+
+    public void createPasswordDialog() {
+
+        passcodeAlertDialogBuilder = new AlertDialog.Builder(this);
+        View v = getLayoutInflater().inflate(R.layout.passcode_dialog_view, null);
+
+        passcodeAlertDialogBuilder.setView(v);
+        passcodeDialog = passcodeAlertDialogBuilder.create();
+        passcodeDialog.show();
+
+        final EditText passcodeEditText, confirmEditText;
+        Button setPasscodeButton;
+
+        passcodeEditText = v.findViewById(R.id.passwordEditTextId);
+        confirmEditText = v.findViewById(R.id.confirmEditTextId);
+        setPasscodeButton = v.findViewById(R.id.setButtonId);
+
+        setPasscodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if ((passcodeEditText.getText().length() != 0) && (confirmEditText.getText().length() != 0) &&
+                        (passcodeEditText.getText().toString().equals(confirmEditText.getText().toString()))) {
+
+                    String PIN = passcodeEditText.getText().toString();
+
+                    sharedPrefs.setPasscodeOption(true);
+                    sharedPrefs.setPasscode(PIN);
+
+                    passcodeEditText.setText(null);
+                    confirmEditText.setText(null);
+
+                    passcodeDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), "PIN successfully set.", Toast.LENGTH_LONG).show();
+
+                } else if ((passcodeEditText.getText().length() == 0) || (confirmEditText.getText().length() == 0)) {
+
+                    Toast.makeText(getApplicationContext(), "PIN cannot be empty.", Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    Toast.makeText(getApplicationContext(), "PINs do not match.", Toast.LENGTH_LONG).show();
                 }
             }
         });

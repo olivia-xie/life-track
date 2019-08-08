@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="25dp">
+
+            <TextView
+                android:id="@+id/passwordTitleId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/kingthings"
+                android:text="@string/create_password"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/passwordEditTextId"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/passwordTitleId"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/kingthings"
+                android:gravity="center"
+                android:hint="PIN"
+                android:inputType="numberPassword"
+                android:maxLength="4"
+                android:paddingTop="10dp"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/confirmEditTextId"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/passwordEditTextId"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/kingthings"
+                android:gravity="center"
+                android:hint="Confirm PIN"
+                android:inputType="numberPassword"
+                android:maxLength="4"
+                android:paddingTop="10dp"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/setButtonId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/confirmEditTextId"
+                android:background="@color/colorAccent"
+                android:fontFamily="@font/kingthings"
+                android:text="@string/set_pin"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</android.support.constraint.ConstraintLayout>
