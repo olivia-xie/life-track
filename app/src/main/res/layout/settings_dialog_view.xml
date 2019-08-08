@@ -34,7 +34,7 @@
                 android:text="@string/passcode_protection" />
 
             <Switch
-                android:id="@+id/passcodeToggleId"
+                android:id="@+id/passcodeSwitchId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/settingsTitleId"

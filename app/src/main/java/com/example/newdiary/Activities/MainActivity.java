@@ -13,9 +13,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import com.example.newdiary.Data.DatabaseHandler;
 import com.example.newdiary.Data.EntryRecyclerViewAdapter;
+import com.example.newdiary.Data.SharedPrefs;
 import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
 
@@ -121,6 +125,9 @@ public class MainActivity extends AppCompatActivity {
     // Shows settings calendarDialog where user can add passcode protection
     public void openSettingsDialog() {
 
+        final SharedPrefs sharedPrefs = new SharedPrefs(MainActivity.this);
+        boolean passcodeOption = sharedPrefs.getPasscodeOption();
+
         settingsAlertDialogBuilder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.settings_dialog_view, null);
 
@@ -128,6 +135,19 @@ public class MainActivity extends AppCompatActivity {
         settingsDialog = settingsAlertDialogBuilder.create();
         settingsDialog.show();
 
+        Switch passcodeSwitch = view.findViewById(R.id.passcodeSwitchId);
+        passcodeSwitch.setChecked(passcodeOption);
+
+        passcodeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    sharedPrefs.setPasscodeOption(true);
+                } else {
+                    sharedPrefs.setPasscodeOption(false);
+                }
+            }
+        });
     }
 
     // Shows calendar calendarDialog when new entry button is pressed
