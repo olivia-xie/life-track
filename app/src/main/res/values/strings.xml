@@ -13,4 +13,5 @@
     <string name="enter_pin">Enter PIN</string>
     <string name="confirm_pin">Confirm PIN</string>
     <string name="pin">PIN</string>
+    <string name="save">Save</string>
 </resources>

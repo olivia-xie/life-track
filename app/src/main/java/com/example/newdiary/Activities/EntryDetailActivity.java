@@ -1,6 +1,7 @@
 package com.example.newdiary.Activities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +24,7 @@ public class EntryDetailActivity extends AppCompatActivity {
 
     private Entry clickedEntry;
     private int entryId;
+    private Entry editedEntry;
 
     private TextView detailDate, detailTitle, detailText;
 
@@ -81,7 +87,43 @@ public class EntryDetailActivity extends AppCompatActivity {
 
         if (id == R.id.edit_entry) {
 
-            Toast.makeText(getApplicationContext(), "edit clicked", Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder editAlertDialogBuilder = new AlertDialog.Builder(EntryDetailActivity.this);
+
+            View view = getLayoutInflater().inflate(R.layout.edit_dialog_view, null);
+
+            editAlertDialogBuilder.setView(view);
+            final Dialog editDialog = editAlertDialogBuilder.create();
+            editDialog.show();
+
+            final TextView dateEdit = view.findViewById(R.id.editDateId);
+            final EditText titleEdit = view.findViewById(R.id.editTitleId);
+            final EditText entryEdit = view.findViewById(R.id.editEntryId);
+            final Button saveEditButton = view.findViewById(R.id.saveEditButtonId);
+
+            dateEdit.setText(clickedEntry.getDate());
+            titleEdit.setText(clickedEntry.getTitle());
+            entryEdit.setText(clickedEntry.getText());
+
+            saveEditButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    editedEntry = new Entry();
+                    editedEntry.setDate(dateEdit.getText().toString());
+                    editedEntry.setTitle(titleEdit.getText().toString());
+                    editedEntry.setText(entryEdit.getText().toString());
+                    editedEntry.setEntryId(entryId);
+
+                    DatabaseHandler dba = new DatabaseHandler(getApplicationContext());
+                    dba.editEntry(editedEntry);
+
+                    editDialog.dismiss();
+                    EntryDetailActivity.this.finish();
+                }
+            });
+
+            //TODO: let user edit the entry date through a calendar view
+
         }
 
         return super.onOptionsItemSelected(item);

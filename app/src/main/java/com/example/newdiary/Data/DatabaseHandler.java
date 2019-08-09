@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.constraint.ConstraintLayout;
 
 import com.example.newdiary.Models.Entry;
 
@@ -70,6 +71,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void editEntry(Entry entry) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+
+        values.put(Constants.ENTRY_TITLE, entry.getTitle());
+        values.put(Constants.ENTRY_TEXT, entry.getText());
+        values.put(Constants.DATE_NAME, entry.getDate());
+
+        db.update(Constants.TABLE_NAME, values, Constants.KEY_ID + "=" + entry.getEntryId(), null);
+        db.close();
 
     }
 
