@@ -6,7 +6,9 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextPaint;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ public class NewEntryActivity extends AppCompatActivity {
     private EditText titleEditText;
     private EditText entryEditText;
     private DatabaseHandler dbHandler;
+    private ImageButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,7 @@ public class NewEntryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_entry);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         entryDate = getIntent().getStringExtra("date");
 
@@ -36,6 +40,14 @@ public class NewEntryActivity extends AppCompatActivity {
 
         titleEditText = findViewById(R.id.titleEditTextId);
         entryEditText = findViewById(R.id.entryEditTextId);
+        backButton = findViewById(R.id.newBackButtonId);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         dbHandler = new DatabaseHandler(NewEntryActivity.this);
 

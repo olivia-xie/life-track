@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ public class EntryDetailActivity extends AppCompatActivity {
     private Entry editedEntry;
 
     private TextView detailDate, detailTitle, detailText;
+    private ImageButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class EntryDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_entry_detail);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         clickedEntry = (Entry) getIntent().getSerializableExtra("clickedEntry");
         entryId = clickedEntry.getEntryId();
@@ -41,10 +44,18 @@ public class EntryDetailActivity extends AppCompatActivity {
         detailDate = findViewById(R.id.detailDateId);
         detailText = findViewById(R.id.detailTextId);
         detailTitle = findViewById(R.id.detailTitleId);
+        backButton = findViewById(R.id.detailBackButtonId);
 
         detailTitle.setText(clickedEntry.getTitle());
         detailText.setText(clickedEntry.getText());
         detailDate.setText(clickedEntry.getDate());
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -85,6 +96,7 @@ public class EntryDetailActivity extends AppCompatActivity {
             alert.show();
         }
 
+        // Creates dialog for user to edit their entry
         if (id == R.id.edit_entry) {
 
             AlertDialog.Builder editAlertDialogBuilder = new AlertDialog.Builder(EntryDetailActivity.this);

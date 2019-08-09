@@ -16,7 +16,27 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:title=" ">
+
+            <ImageButton
+                android:id="@+id/newBackButtonId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_arrow_back"
+                android:background="@android:color/transparent"
+                android:gravity="left" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="life track"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:fontFamily="@font/kingthings"
+                android:textSize="25sp"/>
+
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 

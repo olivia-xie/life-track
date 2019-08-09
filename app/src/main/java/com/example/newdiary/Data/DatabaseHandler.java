@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.constraint.ConstraintLayout;
 
 import com.example.newdiary.Models.Entry;
 
@@ -42,23 +41,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Get total number of entries
-    public int getTotalEntries() {
-
-        int totalEntries = 0;
-
-        String query = "SELECT * FROM " + Constants.TABLE_NAME;
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
-
-        totalEntries = cursor.getCount();
-
-        cursor.close();
-
-        return totalEntries;
-    }
-
     // Delete Entry
     public void deleteEntry(int id) {
 
@@ -68,6 +50,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    // Edit entry
     public void editEntry(Entry entry) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();

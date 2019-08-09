@@ -1,18 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/transitionsContainer"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.LockScreenActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:title=" ">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/kingthings"
+                android:text="life track"
+                android:textColor="@android:color/white"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
     <TextView
+        android:id="@+id/promptTextId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/indicatorDotsId"
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/kingthings"
-        android:paddingBottom="40dp"
+        android:paddingBottom="50dp"
         android:text="@string/enter_pin"
         android:textSize="18sp" />
 
@@ -20,9 +48,9 @@
         android:id="@+id/indicatorDotsId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/pinLockViewId"
+        android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
-        app:dotDiameter="12dp"
+        app:dotDiameter="15dp"
         app:dotEmptyBackground="@drawable/ic_action_panorama_fish_eye"
         app:dotFilledBackground="@drawable/ic_action_lens" />
 
@@ -30,9 +58,10 @@
         android:id="@+id/pinLockViewId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_below="@id/indicatorDotsId"
+        android:layout_centerHorizontal="true"
         android:paddingTop="20dp"
-        app:keypadTextColor="@android:color/black"
+        app:keypadTextColor="#8B000000"
         app:pinLength="4" />
 
 
