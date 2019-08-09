@@ -67,6 +67,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void editEntry(Entry entry) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+    }
+
     // Add an entry
     public void addEntry(Entry entry) {
 

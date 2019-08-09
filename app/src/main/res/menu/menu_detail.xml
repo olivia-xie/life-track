@@ -6,4 +6,10 @@
         android:orderInCategory="100"
         android:title="delete"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/edit_entry"
+        android:orderInCategory="99"
+        android:title="edit"
+        app:showAsAction="always" />
 </menu>

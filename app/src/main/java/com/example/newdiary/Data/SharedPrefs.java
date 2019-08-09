@@ -3,9 +3,11 @@ package com.example.newdiary.Data;
 import android.app.Activity;
 import android.content.SharedPreferences;
 
-public class SharedPrefs {
+import java.io.Serializable;
 
-    SharedPreferences sharedPreferences;
+public class SharedPrefs implements Serializable {
+
+    transient SharedPreferences sharedPreferences;
 
     public SharedPrefs(Activity activity) {
         sharedPreferences = activity.getPreferences(activity.MODE_PRIVATE);
@@ -28,4 +30,5 @@ public class SharedPrefs {
     public String getPasscode() {
         return sharedPreferences.getString("pin", "0000");
     }
+
 }

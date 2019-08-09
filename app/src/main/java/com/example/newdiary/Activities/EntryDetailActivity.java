@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.newdiary.Data.DatabaseHandler;
 import com.example.newdiary.Models.Entry;
@@ -43,7 +44,7 @@ public class EntryDetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu_delete, menu);
+        getMenuInflater().inflate(R.menu.menu_detail, menu);
         return true;
 
     }
@@ -66,8 +67,6 @@ public class EntryDetailActivity extends AppCompatActivity {
                     DatabaseHandler dba = new DatabaseHandler(getApplicationContext());
                     dba.deleteEntry(entryId);
 
-                    startActivity(new Intent(EntryDetailActivity.this, MainActivity.class));
-
                     //remove this activity from activity stack
                     EntryDetailActivity.this.finish();
 
@@ -78,6 +77,11 @@ public class EntryDetailActivity extends AppCompatActivity {
             alert.setNegativeButton("No", null);
 
             alert.show();
+        }
+
+        if (id == R.id.edit_entry) {
+
+            Toast.makeText(getApplicationContext(), "edit clicked", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
