@@ -14,4 +14,5 @@
     <string name="confirm_pin">Confirm PIN</string>
     <string name="pin">PIN</string>
     <string name="save">Save</string>
+    <string name="create_your_first_entry">Create your first entry!</string>
 </resources>

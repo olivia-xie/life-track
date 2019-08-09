@@ -3,7 +3,6 @@ package com.example.newdiary.Activities;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,9 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.newdiary.Data.DatabaseHandler;
 import com.example.newdiary.Models.Entry;
@@ -50,6 +47,7 @@ public class EntryDetailActivity extends AppCompatActivity {
         detailText.setText(clickedEntry.getText());
         detailDate.setText(clickedEntry.getDate());
 
+        // Back button action
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +105,7 @@ public class EntryDetailActivity extends AppCompatActivity {
             final Dialog editDialog = editAlertDialogBuilder.create();
             editDialog.show();
 
-            final TextView dateEdit = view.findViewById(R.id.editDateId);
+            final Button dateEdit = view.findViewById(R.id.editDateButtonId);
             final EditText titleEdit = view.findViewById(R.id.editTitleId);
             final EditText entryEdit = view.findViewById(R.id.editEntryId);
             final Button saveEditButton = view.findViewById(R.id.saveEditButtonId);

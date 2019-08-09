@@ -18,6 +18,7 @@ import android.widget.CalendarView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newdiary.Data.DatabaseHandler;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private CalendarView calendarView;
     private String selectedDate;
     private SharedPrefs sharedPrefs;
+    private TextView noEntriesTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        noEntriesTextView = findViewById(R.id.noEntriesId);
         recyclerView = findViewById(R.id.recyclerViewId);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -115,6 +118,13 @@ public class MainActivity extends AppCompatActivity {
         databaseHandler = new DatabaseHandler(getApplicationContext());
 
         ArrayList<Entry> entriesFromDB = databaseHandler.getEntries();
+
+        // Adding message if there are no entries yet
+        if (entriesFromDB.size() == 0) {
+            noEntriesTextView.setVisibility(View.VISIBLE);
+        } else {
+            noEntriesTextView.setVisibility(View.INVISIBLE);
+        }
 
         for (int i = 0; i < entriesFromDB.size(); i++) {
 
