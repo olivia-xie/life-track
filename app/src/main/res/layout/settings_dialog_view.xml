@@ -30,7 +30,7 @@
                 android:fontFamily="@font/kingthings"
                 android:foregroundGravity="left"
                 android:gravity="start"
-                android:paddingLeft="15dp"
+                android:paddingStart="15dp"
                 android:paddingTop="20dp"
                 android:text="@string/passcode_protection" />
 
@@ -39,8 +39,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/settingsTitleId"
-                android:layout_toRightOf="@id/passcodeTextId"
-                android:paddingLeft="130dp"
+                android:layout_toEndOf="@id/passcodeTextId"
+                android:paddingStart="130dp"
                 android:paddingTop="22dp"
                 android:paddingBottom="5dp" />
 
