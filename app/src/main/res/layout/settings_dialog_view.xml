@@ -17,10 +17,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:fontFamily="@font/kingthings"
                 android:text="@string/settings"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/kingthings"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/passcodeTextId"
@@ -29,7 +29,7 @@
                 android:layout_below="@id/settingsTitleId"
                 android:fontFamily="@font/kingthings"
                 android:foregroundGravity="left"
-                android:gravity="left"
+                android:gravity="start"
                 android:paddingLeft="15dp"
                 android:paddingTop="20dp"
                 android:text="@string/passcode_protection" />
@@ -42,7 +42,7 @@
                 android:layout_toRightOf="@id/passcodeTextId"
                 android:paddingLeft="130dp"
                 android:paddingTop="22dp"
-                android:paddingBottom="5dp"/>
+                android:paddingBottom="5dp" />
 
 
         </RelativeLayout>

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <Button
         android:id="@+id/editDateButtonId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         android:fontFamily="@font/kingthings"
         android:padding="18dp"
         android:textAllCaps="false"
-        android:background="@android:color/transparent"
-        android:textSize="19sp"/>
+        android:textSize="19sp" />
 
     <EditText
         android:id="@+id/editTitleId"
@@ -21,35 +21,35 @@
         android:background="@android:color/transparent"
         android:fontFamily="@font/kingthings"
         android:hint="@string/Title"
-        android:textSize="19sp"
         android:padding="18dp"
         android:textColor="#AE000000"
-        android:textColorHint="#949494" />
+        android:textColorHint="#949494"
+        android:textSize="19sp" />
 
     <EditText
         android:id="@+id/editEntryId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editTitleId"
+        android:background="@android:color/transparent"
         android:fontFamily="@font/kingthings"
-        android:gravity="top|left"
-        android:hint="How was your day today?"
+        android:gravity="top|start"
+        android:hint="@string/how_was_your_day_today"
+        android:lineSpacingExtra="5dp"
         android:padding="18dp"
         android:textColor="#AE000000"
         android:textColorHint="#949494"
-        android:textSize="16sp"
-        android:background="@android:color/transparent"
-        android:lineSpacingExtra="5dp"/>
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/saveEditButtonId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
         android:layout_below="@id/editEntryId"
+        android:background="@color/colorAccent"
         android:fontFamily="@font/kingthings"
         android:text="@string/save"
         android:textColor="@android:color/white"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
 </RelativeLayout>

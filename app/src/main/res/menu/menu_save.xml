@@ -5,9 +5,9 @@
 
     <item
         android:id="@+id/save_entry"
-        android:orderInCategory="99"
-        android:title="save"
         android:icon="@drawable/ic_action_check_circle"
+        android:orderInCategory="99"
+        android:title="@string/save"
         app:showAsAction="always" />
 
 </menu>

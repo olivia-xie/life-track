@@ -23,7 +23,6 @@ public class LockScreenActivity extends AppCompatActivity {
     private PinLockView pinLockView;
     private IndicatorDots indicatorDots;
     private TextView promptText;
-    private ViewGroup transitionsContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,6 @@ public class LockScreenActivity extends AppCompatActivity {
         pinLockView = findViewById(R.id.pinLockViewId);
         indicatorDots = findViewById(R.id.indicatorDotsId);
         promptText = findViewById(R.id.promptTextId);
-        transitionsContainer = findViewById(R.id.transitionsContainer);
 
         // Attaching indicator dots to pin lock view
         pinLockView.attachIndicatorDots(indicatorDots);
@@ -49,7 +47,7 @@ public class LockScreenActivity extends AppCompatActivity {
             @Override
             public void onComplete(String pin) {
 
-                if (pin.equals(actualPIN)){
+                if (pin.equals(actualPIN)) {
                     finish();
                 } else {
 

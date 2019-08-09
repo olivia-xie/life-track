@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/kingthings"
         android:padding="18dp"
-        android:textSize="19sp"/>
+        android:textSize="19sp" />
 
     <TextView
         android:id="@+id/detailTitleId"
@@ -22,9 +22,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/detailDateId"
         android:fontFamily="@font/kingthings"
-        android:textSize="19sp"
         android:padding="18dp"
-        android:textColor="#AE000000" />
+        android:textColor="#AE000000"
+        android:textSize="19sp" />
 
     <TextView
         android:id="@+id/detailTextId"
@@ -33,9 +33,9 @@
         android:layout_below="@id/detailTitleId"
         android:fontFamily="@font/kingthings"
         android:gravity="top|left"
+        android:lineSpacingExtra="5dp"
         android:padding="18dp"
         android:textColor="#AE000000"
-        android:textSize="16sp"
-        android:lineSpacingExtra="5dp"/>
+        android:textSize="16sp" />
 
 </RelativeLayout>

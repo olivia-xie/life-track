@@ -4,16 +4,16 @@
 
     <item
         android:id="@+id/delete_entry"
-        android:orderInCategory="99"
-        android:title="delete"
         android:icon="@drawable/ic_action_delete"
+        android:orderInCategory="99"
+        android:title="@string/delete"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/edit_entry"
-        android:orderInCategory="98"
-        android:title="edit"
         android:icon="@drawable/ic_action_edit"
+        android:orderInCategory="98"
+        android:title="@string/edit"
         app:showAsAction="always" />
 
 </menu>

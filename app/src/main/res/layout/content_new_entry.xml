@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/kingthings"
         android:padding="18dp"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/titleEditTextId"
@@ -24,25 +24,25 @@
         android:background="@android:color/transparent"
         android:fontFamily="@font/kingthings"
         android:hint="@string/Title"
-        android:textSize="19sp"
         android:padding="18dp"
         android:textColor="#AE000000"
-        android:textColorHint="#949494" />
+        android:textColorHint="#949494"
+        android:textSize="19sp" />
 
     <EditText
         android:id="@+id/entryEditTextId"
         android:layout_width="match_parent"
         android:layout_height="550dp"
         android:layout_below="@id/titleEditTextId"
+        android:background="@android:color/transparent"
         android:fontFamily="@font/kingthings"
-        android:gravity="top|left"
-        android:hint="How was your day today?"
+        android:gravity="top|start"
+        android:hint="@string/how_was_your_day_today"
+        android:lineSpacingExtra="5dp"
         android:padding="18dp"
         android:textColor="#AE000000"
         android:textColorHint="#949494"
-        android:textSize="16sp"
-        android:background="@android:color/transparent"
-        android:lineSpacingExtra="5dp"/>
+        android:textSize="16sp" />
 
 
 </RelativeLayout>
