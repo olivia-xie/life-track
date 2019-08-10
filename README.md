@@ -6,7 +6,7 @@ Life Track is a simple diary app which can be used to track and record everyday 
 
 **1. Add Passcode Protection**
 
-![Create passcode](/demo/set-password-demo.gif) ![Enter passcode](/demo/password-demo.gif) ![Wrong passcode](/demo/enter-password-error.gif)
+![Create passcode](/demo/set-password-demo.gif) ![Enter passcode](/demo/password-demo.gif) ![Wrong passcode](/demo/password-error-demo.gif)
 
 **2. Add a New Entry**
 
