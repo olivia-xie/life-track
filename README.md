@@ -2,7 +2,7 @@
 
 Life Track is a simple diary app which can be used to track and record everyday events and experiences. 
 
-# Features
+## Features
 
 **1. Add Passcode Protection**
 
@@ -19,3 +19,7 @@ Life Track is a simple diary app which can be used to track and record everyday 
 **4. Delete an Entry**
 
 ![Delete entry](/demo/delete-demo.gif)
+
+## Built With
+
+* Java, XML in Android Studio
