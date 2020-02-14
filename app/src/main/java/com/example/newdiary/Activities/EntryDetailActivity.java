@@ -18,6 +18,8 @@ import com.example.newdiary.Data.DatabaseHandler;
 import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
 
+import java.text.SimpleDateFormat;
+
 public class EntryDetailActivity extends AppCompatActivity {
 
     private Entry clickedEntry;
@@ -26,6 +28,7 @@ public class EntryDetailActivity extends AppCompatActivity {
 
     private TextView detailDate, detailTitle, detailText;
     private ImageButton backButton;
+    private SimpleDateFormat dateFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,8 @@ public class EntryDetailActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        dateFormat = new SimpleDateFormat("MMM dd, yyyy");
 
         clickedEntry = (Entry) getIntent().getSerializableExtra("clickedEntry");
         entryId = clickedEntry.getEntryId();
@@ -45,7 +50,7 @@ public class EntryDetailActivity extends AppCompatActivity {
 
         detailTitle.setText(clickedEntry.getTitle());
         detailText.setText(clickedEntry.getText());
-        detailDate.setText(clickedEntry.getDate());
+        detailDate.setText(dateFormat.format(clickedEntry.getDate()));
 
         // Back button action
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +115,7 @@ public class EntryDetailActivity extends AppCompatActivity {
             final EditText entryEdit = view.findViewById(R.id.editEntryId);
             final Button saveEditButton = view.findViewById(R.id.saveEditButtonId);
 
-            dateEdit.setText(clickedEntry.getDate());
+            dateEdit.setText(dateFormat.format(clickedEntry.getDate()));
             titleEdit.setText(clickedEntry.getTitle());
             entryEdit.setText(clickedEntry.getText());
 
@@ -119,7 +124,7 @@ public class EntryDetailActivity extends AppCompatActivity {
                 public void onClick(View v) {
 
                     editedEntry = new Entry();
-                    editedEntry.setDate(dateEdit.getText().toString());
+                    //editedEntry.setDate(dateEdit.getText().toString());
                     editedEntry.setTitle(titleEdit.getText().toString());
                     editedEntry.setText(entryEdit.getText().toString());
                     editedEntry.setEntryId(entryId);

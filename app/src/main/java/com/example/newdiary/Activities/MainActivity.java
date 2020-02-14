@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private EntryRecyclerViewAdapter entryRecyclerViewAdapter;
     private DatabaseHandler databaseHandler;
     private CalendarView calendarView;
-    private String selectedDate;
+    private long selectedDate;
     private SharedPrefs sharedPrefs;
     private TextView noEntriesTextView;
 
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < entriesFromDB.size(); i++) {
 
             String title = entriesFromDB.get(i).getTitle();
-            String date = entriesFromDB.get(i).getDate();
+            long date = entriesFromDB.get(i).getDate();
             String entryText = entriesFromDB.get(i).getText();
             int entryId = entriesFromDB.get(i).getEntryId();
 
@@ -243,8 +243,8 @@ public class MainActivity extends AppCompatActivity {
         calendarDialog = calendarAlertDialogBuilder.create();
         calendarDialog.show();
 
-        SimpleDateFormat format = new SimpleDateFormat("MMM dd, yyyy");
-        selectedDate = format.format(calendarView.getDate());
+        Calendar calendar = Calendar.getInstance();
+        selectedDate = calendar.getTimeInMillis();
 
         // Getting selected date from calendar calendarDialog
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -253,10 +253,8 @@ public class MainActivity extends AppCompatActivity {
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, dayOfMonth);
-                long dateMilli = calendar.getTimeInMillis();
+                selectedDate = calendar.getTimeInMillis();
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy");
-                selectedDate = simpleDateFormat.format(dateMilli);
             }
         });
 

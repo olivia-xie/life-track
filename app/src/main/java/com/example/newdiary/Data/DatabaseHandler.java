@@ -26,7 +26,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // Create entries database table
         String CREATE_TABLE = "CREATE TABLE " + Constants.TABLE_NAME + "("
                 + Constants.KEY_ID + " INTEGER PRIMARY KEY, " + Constants.ENTRY_TITLE +
-                " TEXT, " + Constants.ENTRY_TEXT + " TEXT, " + Constants.DATE_NAME + " TEXT);";
+                " TEXT, " + Constants.ENTRY_TEXT + " TEXT, " + Constants.DATE_NAME + " INTEGER);";
 
         db.execSQL(CREATE_TABLE);
     }
@@ -98,7 +98,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 entry.setTitle(cursor.getString(cursor.getColumnIndex(Constants.ENTRY_TITLE)));
                 entry.setText(cursor.getString(cursor.getColumnIndex(Constants.ENTRY_TEXT)));
                 entry.setEntryId(cursor.getInt(cursor.getColumnIndex(Constants.KEY_ID)));
-                entry.setDate(cursor.getString(cursor.getColumnIndex(Constants.DATE_NAME)));
+                entry.setDate(cursor.getLong(cursor.getColumnIndex(Constants.DATE_NAME)));
 
                 entryList.add(entry);
 

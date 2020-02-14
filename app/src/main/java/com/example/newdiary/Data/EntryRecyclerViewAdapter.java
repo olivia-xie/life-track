@@ -13,6 +13,7 @@ import com.example.newdiary.Activities.EntryDetailActivity;
 import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class EntryRecyclerViewAdapter extends RecyclerView.Adapter<EntryRecyclerViewAdapter.ViewHolder> {
@@ -39,13 +40,14 @@ public class EntryRecyclerViewAdapter extends RecyclerView.Adapter<EntryRecycler
 
         Entry entry = entryList.get(position);
 
-        if ((entry.getDate() != null) && (entry.getTitle() != null) && (entry.getText() != null)) {
+        if ((entry.getTitle() != null) && (entry.getText() != null)) {
 
             String entryTitle = entry.getTitle();
             viewHolder.title.setText(entryTitle);
 
-            String entryDate = entry.getDate();
-            viewHolder.date.setText(entryDate);
+            long entryDate = entry.getDate();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
+            viewHolder.date.setText(dateFormat.format(entryDate));
 
             String entryText = entry.getText();
             viewHolder.text.setText(entryText);

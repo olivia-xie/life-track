@@ -15,9 +15,12 @@ import com.example.newdiary.Data.DatabaseHandler;
 import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
 
+import java.text.SimpleDateFormat;
+
 public class NewEntryActivity extends AppCompatActivity {
 
     private String entryDate;
+    private long entryDateMillis;
     private TextView dateTextView;
     private EditText titleEditText;
     private EditText entryEditText;
@@ -32,7 +35,10 @@ public class NewEntryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        entryDate = getIntent().getStringExtra("date");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
+
+        entryDateMillis = getIntent().getLongExtra("date", 0);
+        entryDate = dateFormat.format(entryDateMillis);
 
         dateTextView = findViewById(R.id.entryDateId);
         dateTextView.setText(entryDate);
@@ -77,7 +83,6 @@ public class NewEntryActivity extends AppCompatActivity {
     private void saveEntryToDb() {
 
         Entry entry = new Entry();
-        String date = dateTextView.getText().toString();
         String title = titleEditText.getText().toString();
         String text = entryEditText.getText().toString();
 
@@ -89,7 +94,7 @@ public class NewEntryActivity extends AppCompatActivity {
 
             entry.setTitle(title);
             entry.setText(text);
-            entry.setDate(date);
+            entry.setDate(entryDateMillis);
 
             dbHandler.addEntry(entry);
             dbHandler.close();
@@ -97,6 +102,7 @@ public class NewEntryActivity extends AppCompatActivity {
             // Clear the form
             titleEditText.setText("");
             entryEditText.setText("");
+            dateTextView.setText("");
 
             // Exit new entry activity
             finish();

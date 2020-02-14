@@ -5,14 +5,14 @@ import java.io.Serializable;
 public class Entry implements Serializable {
 
     private String text;
-    private String date;
+    private long date;
     private String title;
     private int entryId;
 
     public Entry() {
     }
 
-    public Entry(String text, String date, String title) {
+    public Entry(String text, long date, String title) {
         this.text = text;
         this.date = date;
         this.title = title;
@@ -26,11 +26,11 @@ public class Entry implements Serializable {
         this.text = text;
     }
 
-    public String getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(long date) {
         this.date = date;
     }
 
