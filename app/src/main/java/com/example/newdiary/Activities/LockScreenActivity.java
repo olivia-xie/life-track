@@ -30,7 +30,6 @@ public class LockScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lock_screen);
 
         final String actualPIN = getIntent().getStringExtra("actualPIN");
-        Toast.makeText(getApplicationContext(), actualPIN, Toast.LENGTH_LONG).show();
 
         pinLockView = findViewById(R.id.pinLockViewId);
         indicatorDots = findViewById(R.id.indicatorDotsId);

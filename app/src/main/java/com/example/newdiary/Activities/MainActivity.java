@@ -52,12 +52,17 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPrefs = new SharedPrefs(MainActivity.this);
 
+        if(true) {
+            Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+            startActivity(intent);
+        }
+
         // Checks if lock screen has been enabled by user and starts lock screen activity if true
-        if (sharedPrefs.getPasscodeOption()) {
+        /*if (sharedPrefs.getPasscodeOption()) {
             Intent intent = new Intent(MainActivity.this, LockScreenActivity.class);
             intent.putExtra("actualPIN", sharedPrefs.getPasscode());
             startActivity(intent);
-        }
+        }*/
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
