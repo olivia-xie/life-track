@@ -51,6 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onStart();
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        Toast.makeText(getApplicationContext(), "curr user: " + currentUser.getEmail(), Toast.LENGTH_SHORT);
     }
 
     private void createAccount(String emailAddress, String password) {
@@ -63,6 +64,22 @@ public class SignUpActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "sign up successful", Toast.LENGTH_LONG);
                             FirebaseUser currUser = mAuth.getCurrentUser();
                             finish();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private void signIn(String emailAddress, String password) {
+
+        mAuth.signInWithEmailAndPassword(emailAddress, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser currUser = mAuth.getCurrentUser();
                         } else {
                             Toast.makeText(getApplicationContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
