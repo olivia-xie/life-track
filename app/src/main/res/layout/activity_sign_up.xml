@@ -51,14 +51,14 @@
         android:inputType="textPersonName"
         android:paddingLeft="10dp"
         android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/passwordEditTextId"
+        app:layout_constraintBottom_toTopOf="@+id/signInEmailEditTextId"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
     <EditText
-        android:id="@+id/passwordEditTextId"
+        android:id="@+id/signInEmailEditTextId"
         android:layout_width="259dp"
         android:layout_height="54dp"
         android:layout_marginStart="76dp"
@@ -86,18 +86,18 @@
         android:layout_marginTop="38dp"
         android:layout_marginEnd="175dp"
         android:layout_marginBottom="300dp"
-        android:background="@android:color/white"
+        android:background="@color/colorPrimary"
         android:fontFamily="@font/kingthings"
+        style="?android:attr/borderlessButtonStyle"
         android:shadowColor="#FFFFFF"
         android:text="sign up"
         android:textColor="@android:color/background_dark"
-        android:textSize="10sp"
-        android:textStyle="bold"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditTextId" />
+        app:layout_constraintTop_toBottomOf="@+id/signInEmailEditTextId" />
 
     <TextView
         android:id="@+id/textView2"
@@ -116,5 +116,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signUpButtonId" />
+
+    <Button
+        android:id="@+id/signInOptionButtonId"
+        android:layout_width="256dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="77dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="78dp"
+        android:layout_marginBottom="191dp"
+        android:background="@color/colorPrimary"
+        android:fontFamily="@font/kingthings"
+        android:textSize="12dp"
+        style="?android:attr/borderlessButtonStyle"
+        android:text="Sign in with existing account"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 </android.support.constraint.ConstraintLayout>

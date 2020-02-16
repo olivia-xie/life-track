@@ -1,5 +1,6 @@
 package com.example.newdiary.Activities;
 
+import android.app.AlertDialog;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +22,10 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText emailEditText;
     private EditText passwordEditText;
     private Button signUpButton;
+    private Button signInOptionButton;
+
+    private AlertDialog.Builder signInAlertDialogBuilder;
+    private AlertDialog signInDialog;
 
     private String email;
     private String password;
@@ -31,8 +36,9 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         emailEditText = findViewById(R.id.emailEditTextId);
-        passwordEditText = findViewById(R.id.passwordEditTextId);
+        passwordEditText = findViewById(R.id.signInEmailEditTextId);
         signUpButton = findViewById(R.id.signUpButtonId);
+        signInOptionButton = findViewById(R.id.signInOptionButtonId);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -43,6 +49,13 @@ public class SignUpActivity extends AppCompatActivity {
                 password = passwordEditText.getText().toString();
 
                 createAccount(email, password);
+            }
+        });
+
+        signInOptionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSignInDialog();
             }
         });
     }
@@ -80,12 +93,37 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser currUser = mAuth.getCurrentUser();
+                            finish();
                         } else {
                             Toast.makeText(getApplicationContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+    }
+
+    private void showSignInDialog() {
+        signInAlertDialogBuilder = new AlertDialog.Builder(this);
+        View v = getLayoutInflater().inflate(R.layout.sign_in_dialog_view, null);
+
+        signInAlertDialogBuilder.setView(v);
+        signInDialog = signInAlertDialogBuilder.create();
+        signInDialog.show();
+
+        final EditText emailEditText, passwordEditText;
+        Button signInButton;
+
+        emailEditText = v.findViewById(R.id.signInEmailEditTextId);
+        passwordEditText = v.findViewById(R.id.signInPasswordEditTextId);
+        signInButton = v.findViewById(R.id.signInButtonId);
+
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                signIn(emailEditText.getText().toString(), passwordEditText.getText().toString());
+            }
+        });
     }
 
 }

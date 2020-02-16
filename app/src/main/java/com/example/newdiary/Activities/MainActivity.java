@@ -25,7 +25,6 @@ import com.example.newdiary.Data.SharedPrefs;
 import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -200,9 +199,9 @@ public class MainActivity extends AppCompatActivity {
         final EditText passcodeEditText, confirmEditText;
         Button setPasscodeButton;
 
-        passcodeEditText = v.findViewById(R.id.passwordEditTextId);
-        confirmEditText = v.findViewById(R.id.confirmEditTextId);
-        setPasscodeButton = v.findViewById(R.id.setButtonId);
+        passcodeEditText = v.findViewById(R.id.signInEmailEditTextId);
+        confirmEditText = v.findViewById(R.id.signInPasswordEditTextId);
+        setPasscodeButton = v.findViewById(R.id.signInButtonId);
 
         // Verify if the new PIN is a valid PIN and sets the PIN if so
         setPasscodeButton.setOnClickListener(new View.OnClickListener() {
