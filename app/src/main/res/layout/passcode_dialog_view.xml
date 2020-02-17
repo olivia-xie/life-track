@@ -23,7 +23,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/signInEmailEditTextId"
+                android:id="@+id/passwordEditTextId"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/signInTitleId"
@@ -42,7 +42,7 @@
                 android:id="@+id/signInPasswordEditTextId"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/signInEmailEditTextId"
+                android:layout_below="@id/passwordEditTextId"
                 android:layout_centerHorizontal="true"
                 android:fontFamily="@font/kingthings"
                 android:gravity="center"

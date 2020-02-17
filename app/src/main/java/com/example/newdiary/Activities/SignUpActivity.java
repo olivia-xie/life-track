@@ -1,6 +1,7 @@
 package com.example.newdiary.Activities;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.newdiary.Data.SharedPrefs;
 import com.example.newdiary.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -21,8 +23,8 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText emailEditText;
     private EditText passwordEditText;
-    private Button signUpButton;
-    private Button signInOptionButton;
+    private Button signInButton;
+    private Button signUpOptionButton;
 
     private AlertDialog.Builder signInAlertDialogBuilder;
     private AlertDialog signInDialog;
@@ -30,32 +32,42 @@ public class SignUpActivity extends AppCompatActivity {
     private String email;
     private String password;
 
+    private SharedPrefs sharedPrefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
         emailEditText = findViewById(R.id.emailEditTextId);
-        passwordEditText = findViewById(R.id.signInEmailEditTextId);
-        signUpButton = findViewById(R.id.signUpButtonId);
-        signInOptionButton = findViewById(R.id.signInOptionButtonId);
+        passwordEditText = findViewById(R.id.passwordEditTextId);
+        signInButton = findViewById(R.id.signInButtonId);
+        signUpOptionButton = findViewById(R.id.signUpOptionButtonId);
 
         mAuth = FirebaseAuth.getInstance();
 
-        signUpButton.setOnClickListener(new View.OnClickListener() {
+        sharedPrefs = new SharedPrefs(SignUpActivity.this);
+
+        if (sharedPrefs.getLoggedInState() && (mAuth.getCurrentUser() != null)) {
+            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 email = emailEditText.getText().toString();
                 password = passwordEditText.getText().toString();
 
-                createAccount(email, password);
+                signIn(email, password);
             }
         });
 
-        signInOptionButton.setOnClickListener(new View.OnClickListener() {
+        signUpOptionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSignInDialog();
+                showSignUpDialog();
             }
         });
     }
@@ -74,9 +86,13 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "sign up successful", Toast.LENGTH_LONG);
                             FirebaseUser currUser = mAuth.getCurrentUser();
-                            finish();
+                            if (currUser != null) {
+                                sharedPrefs.setLoggedInState(true);
+                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
                         } else {
                             Toast.makeText(getApplicationContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
@@ -93,7 +109,12 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser currUser = mAuth.getCurrentUser();
-                            finish();
+                            if (currUser != null) {
+                                sharedPrefs.setLoggedInState(true);
+                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
                         } else {
                             Toast.makeText(getApplicationContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
@@ -102,26 +123,37 @@ public class SignUpActivity extends AppCompatActivity {
                 });
     }
 
-    private void showSignInDialog() {
+    private void showSignUpDialog() {
         signInAlertDialogBuilder = new AlertDialog.Builder(this);
-        View v = getLayoutInflater().inflate(R.layout.sign_in_dialog_view, null);
+        View v = getLayoutInflater().inflate(R.layout.sign_up_dialog_view, null);
 
         signInAlertDialogBuilder.setView(v);
         signInDialog = signInAlertDialogBuilder.create();
         signInDialog.show();
 
-        final EditText emailEditText, passwordEditText;
-        Button signInButton;
+        final EditText emailEditText, passwordEditText, confirmPassEditText;
+        Button signUpButton;
 
-        emailEditText = v.findViewById(R.id.signInEmailEditTextId);
-        passwordEditText = v.findViewById(R.id.signInPasswordEditTextId);
-        signInButton = v.findViewById(R.id.signInButtonId);
+        emailEditText = v.findViewById(R.id.signUpEmailEditTextId);
+        passwordEditText = v.findViewById(R.id.signUpPasswordEditTextId);
+        confirmPassEditText = v.findViewById(R.id.confirmPasswordEditTextId);
+        signUpButton = v.findViewById(R.id.signInButtonId);
 
-        signInButton.setOnClickListener(new View.OnClickListener() {
+        signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                signIn(emailEditText.getText().toString(), passwordEditText.getText().toString());
+                String email = emailEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
+                String confirmPass = confirmPassEditText.getText().toString();
+
+                if (password.equals(confirmPass)) {
+                    createAccount(email, password);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Passwords do not match.", Toast.LENGTH_LONG)
+                            .show();
+                }
+
             }
         });
     }

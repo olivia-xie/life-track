@@ -51,17 +51,15 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPrefs = new SharedPrefs(MainActivity.this);
 
-        if(true) {
+        // Checks if lock screen has been enabled by user and starts lock screen activity if true
+        if (sharedPrefs.getPasscodeOption()) {
+                Intent intent = new Intent(MainActivity.this, LockScreenActivity.class);
+                intent.putExtra("actualPIN", sharedPrefs.getPasscode());
+                startActivity(intent);
+        } else {
             Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
             startActivity(intent);
         }
-
-        // Checks if lock screen has been enabled by user and starts lock screen activity if true
-        /*if (sharedPrefs.getPasscodeOption()) {
-            Intent intent = new Intent(MainActivity.this, LockScreenActivity.class);
-            intent.putExtra("actualPIN", sharedPrefs.getPasscode());
-            startActivity(intent);
-        }*/
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -199,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
         final EditText passcodeEditText, confirmEditText;
         Button setPasscodeButton;
 
-        passcodeEditText = v.findViewById(R.id.signInEmailEditTextId);
+        passcodeEditText = v.findViewById(R.id.passwordEditTextId);
         confirmEditText = v.findViewById(R.id.signInPasswordEditTextId);
         setPasscodeButton = v.findViewById(R.id.signInButtonId);
 

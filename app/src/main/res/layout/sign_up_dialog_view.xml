@@ -13,22 +13,21 @@
             android:padding="25dp">
 
             <TextView
-                android:id="@+id/signInTitleId"
+                android:id="@+id/signUpTitleId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:fontFamily="@font/kingthings"
-                android:text="Sign In"
+                android:text="Create new account"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/signInEmailEditTextId"
+                android:id="@+id/signUpEmailEditTextId"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
-                android:layout_below="@id/signInTitleId"
+                android:layout_below="@id/signUpTitleId"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/round_edit_text"
                 android:fontFamily="@font/kingthings"
                 android:paddingLeft="20dp"
                 android:hint="Email"
@@ -37,15 +36,27 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/signInPasswordEditTextId"
+                android:id="@+id/signUpPasswordEditTextId"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
-                android:layout_below="@id/signInEmailEditTextId"
+                android:layout_below="@id/signUpEmailEditTextId"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/round_edit_text"
                 android:fontFamily="@font/kingthings"
                 android:paddingLeft="20dp"
                 android:hint="Password"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/confirmPasswordEditTextId"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_below="@id/signUpPasswordEditTextId"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/kingthings"
+                android:paddingLeft="20dp"
+                android:hint="Confirm password"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -54,10 +65,10 @@
                 android:id="@+id/signInButtonId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/signInPasswordEditTextId"
+                android:layout_below="@id/confirmPasswordEditTextId"
                 android:background="@color/colorAccent"
                 android:fontFamily="@font/kingthings"
-                android:text="@string/set_pin"
+                android:text="sign up"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
