@@ -30,13 +30,4 @@ public class SharedPrefs implements Serializable {
     public String getPasscode() {
         return sharedPreferences.getString("pin", "0000");
     }
-
-    // get/set if user is logged in or not
-    public void setLoggedInState(boolean state) {
-        sharedPreferences.edit().putBoolean("loggedin?", state).apply();
-    }
-
-    public boolean getLoggedInState() {
-        return sharedPreferences.getBoolean("loggedin?", false);
-    }
 }

@@ -71,12 +71,10 @@ public class SignUpActivity extends AppCompatActivity {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        if (sharedPrefs.getLoggedInState() && (mAuth.getCurrentUser() != null)) {
+        // If user is already logged in
+        if (currentUser != null) {
             Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
             startActivity(intent);
-            if (currentUser != null) {
-                Toast.makeText(getApplicationContext(), "curr user: " + currentUser.getEmail(), Toast.LENGTH_SHORT).show();
-            }
             finish();
         }
     }
@@ -90,7 +88,6 @@ public class SignUpActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser currUser = mAuth.getCurrentUser();
                             if (currUser != null) {
-                                sharedPrefs.setLoggedInState(true);
                                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
@@ -112,7 +109,6 @@ public class SignUpActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser currUser = mAuth.getCurrentUser();
                             if (currUser != null) {
-                                sharedPrefs.setLoggedInState(true);
                                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
