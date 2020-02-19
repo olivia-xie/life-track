@@ -48,12 +48,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         sharedPrefs = new SharedPrefs(SignUpActivity.this);
 
-        if (sharedPrefs.getLoggedInState() && (mAuth.getCurrentUser() != null)) {
-            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +70,15 @@ public class SignUpActivity extends AppCompatActivity {
         super.onStart();
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        Toast.makeText(getApplicationContext(), "curr user: " + currentUser.getEmail(), Toast.LENGTH_SHORT);
+
+        if (sharedPrefs.getLoggedInState() && (mAuth.getCurrentUser() != null)) {
+            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+            startActivity(intent);
+            if (currentUser != null) {
+                Toast.makeText(getApplicationContext(), "curr user: " + currentUser.getEmail(), Toast.LENGTH_SHORT).show();
+            }
+            finish();
+        }
     }
 
     private void createAccount(String emailAddress, String password) {

@@ -56,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, LockScreenActivity.class);
                 intent.putExtra("actualPIN", sharedPrefs.getPasscode());
                 startActivity(intent);
-        } else {
-            Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-            startActivity(intent);
         }
 
         super.onCreate(savedInstanceState);
