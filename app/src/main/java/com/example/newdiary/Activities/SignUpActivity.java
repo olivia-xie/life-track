@@ -51,8 +51,8 @@ public class SignUpActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                email = emailEditText.getText().toString();
-                password = passwordEditText.getText().toString();
+                email = emailEditText.getText().toString().trim();
+                password = passwordEditText.getText().toString().trim();
 
                 signIn(email, password);
             }
@@ -145,9 +145,9 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String email = emailEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
-                String confirmPass = confirmPassEditText.getText().toString();
+                String email = emailEditText.getText().toString().trim();
+                String password = passwordEditText.getText().toString().trim();
+                String confirmPass = confirmPassEditText.getText().toString().trim();
 
                 if (password.equals(confirmPass)) {
                     createAccount(email, password);
