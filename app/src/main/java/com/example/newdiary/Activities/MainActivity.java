@@ -24,6 +24,8 @@ import com.example.newdiary.Data.EntryRecyclerViewAdapter;
 import com.example.newdiary.Data.SharedPrefs;
 import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -164,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
         Switch passcodeSwitch = view.findViewById(R.id.passcodeSwitchId);
         passcodeSwitch.setChecked(passcodeOption);
 
+        Button signOutButton = view.findViewById(R.id.signOutButtonId);
+
         // Saving toggle button preferences
         passcodeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -176,6 +180,20 @@ public class MainActivity extends AppCompatActivity {
 
                 } else {
                     sharedPrefs.setPasscodeOption(false);
+                }
+            }
+        });
+
+        // Signing user out
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                if (mAuth != null) {
+                    mAuth.signOut();
+                    Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
         });
