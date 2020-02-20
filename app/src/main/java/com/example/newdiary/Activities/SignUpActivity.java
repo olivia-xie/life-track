@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,10 +52,14 @@ public class SignUpActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                email = emailEditText.getText().toString().trim();
-                password = passwordEditText.getText().toString().trim();
 
-                signIn(email, password);
+                if (email != null && password != null) {
+                    email = emailEditText.getText().toString().trim();
+                    password = passwordEditText.getText().toString().trim();
+
+                    signIn(email, password);
+                }
+
             }
         });
 
@@ -141,14 +146,15 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String email = emailEditText.getText().toString().trim();
-                String password = passwordEditText.getText().toString().trim();
-                String confirmPass = confirmPassEditText.getText().toString().trim();
+                Editable email = emailEditText.getText();
+                Editable password = passwordEditText.getText();
+                Editable confirmPass = confirmPassEditText.getText();
 
-                if (password.equals(confirmPass)) {
-                    createAccount(email, password);
+                if (password.equals(confirmPass) && email != null && password != null &&
+                    confirmPass != null) {
+                    createAccount(email.toString().trim(), password.toString().trim());
                 } else {
-                    Toast.makeText(getApplicationContext(), "Passwords do not match.", Toast.LENGTH_LONG)
+                    Toast.makeText(getApplicationContext(), "Error signing up.", Toast.LENGTH_LONG)
                             .show();
                 }
 

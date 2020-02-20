@@ -25,7 +25,6 @@ import com.example.newdiary.Data.SharedPrefs;
 import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -176,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
 
                     settingsDialog.dismiss();
 
-                    createPasswordDialog();
+                    createPinCodeDialog();
 
                 } else {
                     sharedPrefs.setPasscodeOption(false);
@@ -200,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Creates dialog for user to set a new pin code
-    public void createPasswordDialog() {
+    public void createPinCodeDialog() {
 
         passcodeAlertDialogBuilder = new AlertDialog.Builder(this);
         View v = getLayoutInflater().inflate(R.layout.passcode_dialog_view, null);
