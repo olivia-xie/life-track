@@ -6,12 +6,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.newdiary.Data.SharedPrefs;
 import com.example.newdiary.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,8 +33,6 @@ public class SignUpActivity extends AppCompatActivity {
     private String email;
     private String password;
 
-    private SharedPrefs sharedPrefs;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,13 +45,13 @@ public class SignUpActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        sharedPrefs = new SharedPrefs(SignUpActivity.this);
-
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (email != null && password != null) {
+                if (emailEditText.getText().toString() != null &&
+                        passwordEditText.getText().toString() != null) {
+                    
                     email = emailEditText.getText().toString().trim();
                     password = passwordEditText.getText().toString().trim();
 

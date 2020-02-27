@@ -19,4 +19,6 @@
     <string name="edit">edit</string>
     <string name="life_track">life track</string>
     <string name="how_was_your_day_today">How was your day today?</string>
+    <string name="facebook_app_id">2940559832663617</string>
+    <string name="fb_login_protocol_scheme">fb2940559832663617</string>
 </resources>
