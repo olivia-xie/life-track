@@ -51,7 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 if (emailEditText.getText().toString() != null &&
                         passwordEditText.getText().toString() != null) {
-                    
+
                     email = emailEditText.getText().toString().trim();
                     password = passwordEditText.getText().toString().trim();
 
