@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "76348716912",
+    "firebase_url": "https://simple-diary-99f0b.firebaseio.com",
+    "project_id": "simple-diary-99f0b",
+    "storage_bucket": "simple-diary-99f0b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:76348716912:android:a799fe8d67fbd1d1bb81b5",
+        "android_client_info": {
+          "package_name": "com.example.newdiary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "76348716912-9tvpu6t003ar3cv7ofoal0tvmkmtmqim.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.newdiary",
+            "certificate_hash": "cf0d9c13f071b57457b0e09e746809863443e39a"
+          }
+        },
+        {
+          "client_id": "76348716912-iefte6djchs1jiaav12us1eoe2ko50h4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.newdiary",
+            "certificate_hash": "97fe1b3d7d32f48ade85683d838ebe0dcf6c543b"
+          }
+        },
+        {
+          "client_id": "76348716912-3oqahf2ic1f3r85eicbi1n72te8a236p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdpT2tIw7l2FYmIeAy3RGLPMf6qj7YhCI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "76348716912-3oqahf2ic1f3r85eicbi1n72te8a236p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

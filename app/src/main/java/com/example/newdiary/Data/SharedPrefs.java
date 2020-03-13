@@ -30,4 +30,9 @@ public class SharedPrefs implements Serializable {
     public String getPasscode() {
         return sharedPreferences.getString("pin", "0000");
     }
+
+    // get/set backup options
+    public void setBackupOption(boolean choice) { sharedPreferences.edit().putBoolean("backup?", choice).apply(); }
+
+    public Boolean getBackupOption() { return sharedPreferences.getBoolean("backup?", false); }
 }

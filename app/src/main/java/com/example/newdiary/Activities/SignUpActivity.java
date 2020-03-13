@@ -49,8 +49,8 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (emailEditText.getText().toString() != null &&
-                        passwordEditText.getText().toString() != null) {
+                if (emailEditText.getText() != null &&
+                        passwordEditText.getText() != null) {
 
                     email = emailEditText.getText().toString().trim();
                     password = passwordEditText.getText().toString().trim();

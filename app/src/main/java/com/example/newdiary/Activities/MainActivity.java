@@ -148,11 +148,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // Shows settings alert dialog where user can add passcode protection
+    // Shows settings alert dialog where user can add passcode protection and backup data
     public void openSettingsDialog() {
 
         // Getting switch on/off preferences
         boolean passcodeOption = sharedPrefs.getPasscodeOption();
+
+        // Getting backup preferences
+        boolean backupOption = sharedPrefs.getBackupOption();
 
         // Showing alert dialog
         settingsAlertDialogBuilder = new AlertDialog.Builder(this);
@@ -165,9 +168,12 @@ public class MainActivity extends AppCompatActivity {
         Switch passcodeSwitch = view.findViewById(R.id.passcodeSwitchId);
         passcodeSwitch.setChecked(passcodeOption);
 
+        Switch backupSwitch = view.findViewById(R.id.backUpSwitchId);
+        backupSwitch.setChecked(backupOption);
+
         Button signOutButton = view.findViewById(R.id.signOutButtonId);
 
-        // Saving toggle button preferences
+        // Saving password toggle button preferences
         passcodeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -183,6 +189,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Saving backup toggle button preferences
+        backupSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+
+                    sharedPrefs.setBackupOption(true);
+                    backupDataToFirebase();
+
+                } else {
+                    sharedPrefs.setBackupOption(false);
+                }
+            }
+        });
+
         // Signing user out
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,6 +211,11 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 if (mAuth != null) {
                     mAuth.signOut();
+
+                    // Remove PIN on sign out
+                    sharedPrefs.setPasscodeOption(false);
+                    sharedPrefs.setPasscode(null);
+
                     Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
                     startActivity(intent);
                     finish();
@@ -287,5 +313,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void backupDataToFirebase() {
+        
     }
 }
