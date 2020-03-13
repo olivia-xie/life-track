@@ -25,6 +25,8 @@ import com.example.newdiary.Data.SharedPrefs;
 import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private long selectedDate;
     private SharedPrefs sharedPrefs;
     private TextView noEntriesTextView;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -316,6 +319,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void backupDataToFirebase() {
-        
+
+        databaseHandler = new DatabaseHandler(getApplicationContext());
+        ArrayList<Entry> entriesFromDB = databaseHandler.getEntries();
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currUser = mAuth.getCurrentUser();
+
+        if (currUser != null) {
+
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            String currUserUID = currUser.getUid();
+
+            for (int i = 0; i < entriesFromDB.size(); i++) {
+
+                String entryId = Integer.toString(entriesFromDB.get(i).getEntryId());
+
+                firebaseDatabase.getReference().child(currUserUID).child(entryId)
+                        .child("title")
+                        .setValue(entriesFromDB.get(i).getTitle());
+
+                firebaseDatabase.getReference().child(currUserUID).child(entryId)
+                        .child("entryText")
+                        .setValue(entriesFromDB.get(i).getText());
+
+                firebaseDatabase.getReference().child(currUserUID).child(entryId)
+                        .child("date")
+                        .setValue(entriesFromDB.get(i).getDate());
+            }
+
+            Toast.makeText(getApplicationContext(), "entries added", Toast.LENGTH_LONG).show();
+        }
+
     }
 }
