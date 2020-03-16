@@ -21,6 +21,7 @@ public class NewEntryActivity extends AppCompatActivity {
 
     private String entryDate;
     private long entryDateMillis;
+    private long entryId;
     private TextView dateTextView;
     private EditText titleEditText;
     private EditText entryEditText;
@@ -92,6 +93,8 @@ public class NewEntryActivity extends AppCompatActivity {
 
         } else {
 
+            entryId = System.currentTimeMillis();
+            entry.setEntryId(entryId);
             entry.setTitle(title);
             entry.setText(text);
             entry.setDate(entryDateMillis);

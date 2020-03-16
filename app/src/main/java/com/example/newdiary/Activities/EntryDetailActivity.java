@@ -13,18 +13,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.newdiary.Data.DatabaseHandler;
+import com.example.newdiary.Data.SharedPrefs;
 import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 
 public class EntryDetailActivity extends AppCompatActivity {
 
     private Entry clickedEntry;
-    private int entryId;
+    private long entryId;
     private Entry editedEntry;
+    private SharedPrefs prefs;
 
     private TextView detailDate, detailTitle, detailText;
     private ImageButton backButton;
@@ -51,6 +57,8 @@ public class EntryDetailActivity extends AppCompatActivity {
         detailTitle.setText(clickedEntry.getTitle());
         detailText.setText(clickedEntry.getText());
         detailDate.setText(dateFormat.format(clickedEntry.getDate()));
+
+        prefs = new SharedPrefs(EntryDetailActivity.this);
 
         // Back button action
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -84,12 +92,18 @@ public class EntryDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
+                    Toast.makeText(getApplicationContext(), " " + entryId, Toast.LENGTH_LONG).show();
+
                     DatabaseHandler dba = new DatabaseHandler(getApplicationContext());
                     dba.deleteEntry(entryId);
+
 
                     //remove this activity from activity stack
                     EntryDetailActivity.this.finish();
 
+                    if (prefs.getBackupOption()) {
+                        deleteEntryFromFirebase(entryId);
+                    }
 
                 }
             });
@@ -142,6 +156,17 @@ public class EntryDetailActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void deleteEntryFromFirebase(long entryId) {
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currUser = mAuth.getCurrentUser();
+        String currUserUID = currUser.getUid();
+
+        FirebaseDatabase.getInstance().getReference().child(currUserUID)
+                .child(Long.toString(entryId))
+                .removeValue();
     }
 
 

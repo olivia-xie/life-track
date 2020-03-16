@@ -25,7 +25,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // Create entries database table
         String CREATE_TABLE = "CREATE TABLE " + Constants.TABLE_NAME + "("
-                + Constants.KEY_ID + " INTEGER PRIMARY KEY, " + Constants.ENTRY_TITLE +
+                + Constants.KEY_ID + " LONG PRIMARY KEY, " + Constants.ENTRY_TITLE +
                 " TEXT, " + Constants.ENTRY_TEXT + " TEXT, " + Constants.DATE_NAME + " INTEGER);";
 
         db.execSQL(CREATE_TABLE);
@@ -42,7 +42,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Delete Entry
-    public void deleteEntry(int id) {
+    public void deleteEntry(long id) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(Constants.TABLE_NAME, Constants.KEY_ID + " = ?",
@@ -73,6 +73,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(Constants.ENTRY_TITLE, entry.getTitle());
         values.put(Constants.ENTRY_TEXT, entry.getText());
         values.put(Constants.DATE_NAME, entry.getDate());
+        values.put(Constants.KEY_ID, entry.getEntryId());
 
         db.insert(Constants.TABLE_NAME, null, values);
 

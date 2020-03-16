@@ -7,7 +7,7 @@ public class Entry implements Serializable {
     private String text;
     private long date;
     private String title;
-    private int entryId;
+    private long entryId;
 
     public Entry() {
     }
@@ -42,11 +42,11 @@ public class Entry implements Serializable {
         this.title = title;
     }
 
-    public int getEntryId() {
+    public long getEntryId() {
         return entryId;
     }
 
-    public void setEntryId(int entryId) {
+    public void setEntryId(long entryId) {
         this.entryId = entryId;
     }
 }
