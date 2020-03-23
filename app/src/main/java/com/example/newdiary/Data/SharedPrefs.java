@@ -34,5 +34,5 @@ public class SharedPrefs implements Serializable {
     // get/set backup options
     public void setBackupOption(boolean choice) { sharedPreferences.edit().putBoolean("backup?", choice).apply(); }
 
-    public Boolean getBackupOption() { return sharedPreferences.getBoolean("backup?", false); }
+    public boolean getBackupOption() { return sharedPreferences.getBoolean("backup?", false); }
 }

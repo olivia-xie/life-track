@@ -13,8 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newdiary.Data.DatabaseHandler;
+import com.example.newdiary.Data.SharedPrefs;
 import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 
@@ -28,6 +32,9 @@ public class NewEntryActivity extends AppCompatActivity {
     private EditText entryEditText;
     private DatabaseHandler dbHandler;
     private ImageButton backButton;
+    private FirebaseAuth mAuth;
+    private SharedPrefs prefs;
+    private Boolean backupOption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +48,8 @@ public class NewEntryActivity extends AppCompatActivity {
 
         entryDateMillis = getIntent().getLongExtra("date", 0);
         entryDate = dateFormat.format(entryDateMillis);
+
+        backupOption = getIntent().getBooleanExtra("backup?", false);
 
         dateTextView = findViewById(R.id.entryDateId);
         dateTextView.setText(entryDate);
@@ -109,8 +118,38 @@ public class NewEntryActivity extends AppCompatActivity {
             entryEditText.setText("");
             dateTextView.setText("");
 
+            // Backup entry to Firebase if backup option is enabled
+            if (backupOption) {
+                backupEntryToFirebase(entry);
+            }
+
             // Exit new entry activity
             finish();
+        }
+    }
+
+    public void backupEntryToFirebase(Entry entry) {
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currUser = mAuth.getCurrentUser();
+
+        if (currUser != null) {
+
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            String currUserUID = currUser.getUid();
+
+            String entryId = Long.toString(entry.getEntryId());
+
+            firebaseDatabase.getReference().child(currUserUID).child(entryId)
+                    .child("title")
+                    .setValue(entry.getTitle());
+
+            firebaseDatabase.getReference().child(currUserUID).child(entryId)
+                    .child("entryText")
+                    .setValue(entry.getText());
+
+            firebaseDatabase.getReference().child(currUserUID).child(entryId)
+                    .child("date")
+                    .setValue(entry.getDate());
         }
     }
 

@@ -182,9 +182,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-
                     settingsDialog.dismiss();
-
                     createPinCodeDialog();
 
                 } else {
@@ -198,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-
                     sharedPrefs.setBackupOption(true);
                     backupAllDataToFirebase();
 
@@ -311,6 +308,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(MainActivity.this, NewEntryActivity.class);
                 intent.putExtra("date", selectedDate);
+                intent.putExtra("backup?", sharedPrefs.getBackupOption());
 
                 calendarDialog.dismiss();
                 startActivity(intent);
@@ -348,35 +346,8 @@ public class MainActivity extends AppCompatActivity {
                         .child("date")
                         .setValue(entriesFromDB.get(i).getDate());
             }
-
-            Toast.makeText(getApplicationContext(), "entries added", Toast.LENGTH_LONG).show();
         }
 
-    }
-
-    public void backupEntryToFirebase(Entry entry) {
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currUser = mAuth.getCurrentUser();
-
-        if (currUser != null) {
-
-            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-            String currUserUID = currUser.getUid();
-
-            String entryId = Long.toString(entry.getEntryId());
-
-            firebaseDatabase.getReference().child(currUserUID).child(entryId)
-                    .child("title")
-                    .setValue(entry.getTitle());
-
-            firebaseDatabase.getReference().child(currUserUID).child(entryId)
-                    .child("entryText")
-                    .setValue(entry.getText());
-
-            firebaseDatabase.getReference().child(currUserUID).child(entryId)
-                    .child("date")
-                    .setValue(entry.getDate());
-        }
     }
 
 }
