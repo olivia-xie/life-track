@@ -12,10 +12,11 @@ public class Entry implements Serializable {
     public Entry() {
     }
 
-    public Entry(String text, long date, String title) {
+    public Entry(String text, long date, String title, long id) {
         this.text = text;
         this.date = date;
         this.title = title;
+        this.entryId = id;
     }
 
     public String getText() {

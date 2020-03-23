@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.newdiary.Models.Entry;
 
@@ -98,13 +100,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 Entry entry = new Entry();
                 entry.setTitle(cursor.getString(cursor.getColumnIndex(Constants.ENTRY_TITLE)));
                 entry.setText(cursor.getString(cursor.getColumnIndex(Constants.ENTRY_TEXT)));
-                entry.setEntryId(cursor.getInt(cursor.getColumnIndex(Constants.KEY_ID)));
+                entry.setEntryId(cursor.getLong(cursor.getColumnIndex(Constants.KEY_ID)));
                 entry.setDate(cursor.getLong(cursor.getColumnIndex(Constants.DATE_NAME)));
 
                 entryList.add(entry);
 
             } while (cursor.moveToNext());
-
 
         }
 
