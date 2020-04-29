@@ -274,6 +274,14 @@ public class MainActivity extends AppCompatActivity {
                     sharedPrefs.setPasscodeOption(false);
                     sharedPrefs.setPasscode(null);
 
+                    // Clear local database on sign out
+                    DatabaseHandler dbHandler = new DatabaseHandler(getApplicationContext());
+                    ArrayList<Entry> allEntries = dbHandler.getEntries();
+
+                    for (Entry entry : allEntries) {
+                        dbHandler.deleteEntry(entry.getEntryId());
+                    }
+
                     Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
                     startActivity(intent);
                     finish();
