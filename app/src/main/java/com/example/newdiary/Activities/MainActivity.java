@@ -3,6 +3,7 @@ package com.example.newdiary.Activities;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,7 +28,11 @@ import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPrefs sharedPrefs;
     private TextView noEntriesTextView;
     private FirebaseAuth mAuth;
+    private FirebaseUser currUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +68,57 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("actualPIN", sharedPrefs.getPasscode());
                 startActivity(intent);
         }
+
+        mAuth = FirebaseAuth.getInstance();
+        currUser = mAuth.getCurrentUser();
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child(currUser.getUid());
+
+        // Retrieving any existing user entries from firebase
+        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    for (DataSnapshot entry : dataSnapshot.getChildren()){
+
+                        //Toast.makeText(getApplicationContext(), entry.getKey(), Toast.LENGTH_LONG).show();
+
+                        Entry newEntry = new Entry();
+
+                        // Entry ID
+                        newEntry.setEntryId(Long.parseLong(entry.getKey()));
+
+                        int count = 1;
+
+                        for (DataSnapshot entryField : entry.getChildren()) {
+                            if (count == 1) {
+                                newEntry.setDate(Long.parseLong(entryField.getValue().toString()));
+                            }
+
+                            if (count == 2) {
+                                newEntry.setText(entryField.getValue().toString());
+                            }
+
+                            if (count == 3) {
+                                newEntry.setTitle(entryField.getValue().toString());
+                            }
+
+                            count++;
+                        }
+
+                        DatabaseHandler dbHandler = new DatabaseHandler(getApplicationContext());
+                        dbHandler.addEntry(newEntry);
+                        dbHandler.close();
+
+                        refreshData();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -209,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
                 if (mAuth != null) {
                     mAuth.signOut();
 
@@ -322,9 +379,6 @@ public class MainActivity extends AppCompatActivity {
         databaseHandler = new DatabaseHandler(getApplicationContext());
         ArrayList<Entry> entriesFromDB = databaseHandler.getEntries();
 
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currUser = mAuth.getCurrentUser();
-
         if (currUser != null) {
 
             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -347,6 +401,10 @@ public class MainActivity extends AppCompatActivity {
                         .setValue(entriesFromDB.get(i).getDate());
             }
         }
+
+    }
+
+    public void loadDataFromFirebase() {
 
     }
 

@@ -92,11 +92,8 @@ public class EntryDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
-                    Toast.makeText(getApplicationContext(), " " + entryId, Toast.LENGTH_LONG).show();
-
                     DatabaseHandler dba = new DatabaseHandler(getApplicationContext());
                     dba.deleteEntry(entryId);
-
 
                     //remove this activity from activity stack
                     EntryDetailActivity.this.finish();
@@ -104,7 +101,6 @@ public class EntryDetailActivity extends AppCompatActivity {
                     if (prefs.getBackupOption()) {
                         deleteEntryFromFirebase(entryId);
                     }
-
                 }
             });
 
