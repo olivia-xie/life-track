@@ -1,6 +1,7 @@
 package com.example.newdiary.Activities;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -268,23 +269,36 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (mAuth != null) {
-                    mAuth.signOut();
 
-                    // Remove PIN on sign out
-                    sharedPrefs.setPasscodeOption(false);
-                    sharedPrefs.setPasscode(null);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                    alert.setTitle("Log Out?");
+                    alert.setMessage("Are you sure you want to log out? Remember to back up your data if you would like to import your entries once you login again.");
+                    alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mAuth.signOut();
 
-                    // Clear local database on sign out
-                    DatabaseHandler dbHandler = new DatabaseHandler(getApplicationContext());
-                    ArrayList<Entry> allEntries = dbHandler.getEntries();
+                            // Remove PIN on sign out
+                            sharedPrefs.setPasscodeOption(false);
+                            sharedPrefs.setPasscode(null);
 
-                    for (Entry entry : allEntries) {
-                        dbHandler.deleteEntry(entry.getEntryId());
-                    }
+                            // Clear local database on sign out
+                            DatabaseHandler dbHandler = new DatabaseHandler(getApplicationContext());
+                            ArrayList<Entry> allEntries = dbHandler.getEntries();
 
-                    Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-                    startActivity(intent);
-                    finish();
+                            for (Entry entry : allEntries) {
+                                dbHandler.deleteEntry(entry.getEntryId());
+                            }
+
+                            Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+
+                    alert.setNegativeButton("No", null);
+
+                    alert.show();
                 }
             }
         });
