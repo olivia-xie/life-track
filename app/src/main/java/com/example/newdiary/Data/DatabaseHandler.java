@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -77,7 +78,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(Constants.DATE_NAME, entry.getDate());
         values.put(Constants.KEY_ID, entry.getEntryId());
 
-        db.insert(Constants.TABLE_NAME, null, values);
+        if (!exists(entry.getEntryId())) {
+            db.insert(Constants.TABLE_NAME, null, values);
+        }
 
         db.close();
     }
@@ -114,5 +117,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return entryList;
 
+    }
+
+    public boolean exists(long entryId) {
+        SQLiteDatabase dba = this.getReadableDatabase();
+
+        Cursor cursor = dba.query(Constants.TABLE_NAME, new String[]{Constants.KEY_ID}, Constants.KEY_ID + " = " + Long.toString(entryId),
+                null, null, null, null);
+
+        return cursor.getCount() != 0;
     }
 }
