@@ -96,7 +96,7 @@ public class EntryDetailActivity extends AppCompatActivity {
 
             AlertDialog.Builder alert = new AlertDialog.Builder(EntryDetailActivity.this);
             alert.setTitle("Delete?");
-            alert.setMessage("Are you sure you want to delete this entry?");
+            alert.setMessage("Are you sure you want to delete this entry? Backups will be deleted as well if you have selected the backup option.");
             alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
