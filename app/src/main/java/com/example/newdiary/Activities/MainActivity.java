@@ -281,17 +281,16 @@ public class MainActivity extends AppCompatActivity {
                             // Remove PIN on sign out
                             sharedPrefs.setPasscodeOption(false);
                             sharedPrefs.setPasscode(null);
+                            sharedPrefs.setBackupOption(false);
 
                             // Clear local database on sign out
                             DatabaseHandler dbHandler = new DatabaseHandler(getApplicationContext());
-                            ArrayList<Entry> allEntries = dbHandler.getEntries();
-
-                            for (Entry entry : allEntries) {
-                                dbHandler.deleteEntry(entry.getEntryId());
-                            }
+                            dbHandler.clearTable();
 
                             Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
                             startActivity(intent);
+                            settingsDialog.dismiss();
+
                             finish();
                         }
                     });

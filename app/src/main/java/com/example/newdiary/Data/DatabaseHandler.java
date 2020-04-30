@@ -119,6 +119,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
+    public void clearTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(Constants.TABLE_NAME, null, null);
+    }
+
     public boolean exists(long entryId) {
         SQLiteDatabase dba = this.getReadableDatabase();
 
