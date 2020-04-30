@@ -1,22 +1,15 @@
 package com.example.newdiary.Activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.transition.TransitionManager;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.andrognito.pinlockview.IndicatorDots;
 import com.andrognito.pinlockview.PinLockListener;
 import com.andrognito.pinlockview.PinLockView;
-import com.example.newdiary.Data.SharedPrefs;
 import com.example.newdiary.R;
-
-import org.w3c.dom.Text;
 
 public class LockScreenActivity extends AppCompatActivity {
 
@@ -24,12 +17,16 @@ public class LockScreenActivity extends AppCompatActivity {
     private IndicatorDots indicatorDots;
     private TextView promptText;
 
+    private SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lock_screen);
 
-        final String actualPIN = getIntent().getStringExtra("actualPIN");
+        prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+
+        final String actualPIN = prefs.getString("pin", null);
 
         pinLockView = findViewById(R.id.pinLockViewId);
         indicatorDots = findViewById(R.id.indicatorDotsId);

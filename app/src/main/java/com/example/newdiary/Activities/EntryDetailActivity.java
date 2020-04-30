@@ -2,8 +2,9 @@ package com.example.newdiary.Activities;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newdiary.Data.DatabaseHandler;
-import com.example.newdiary.Data.SharedPrefs;
 import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,7 +33,8 @@ public class EntryDetailActivity extends AppCompatActivity {
     private Entry clickedEntry;
     private long entryId;
     private Entry editedEntry;
-    private SharedPrefs prefs;
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor prefsEditor;
     private AlertDialog calendarDialog;
     private AlertDialog.Builder calendarAlertDialogBuilder;
     private CalendarView calendarView;
@@ -65,7 +66,8 @@ public class EntryDetailActivity extends AppCompatActivity {
         detailText.setText(clickedEntry.getText());
         detailDate.setText(dateFormat.format(clickedEntry.getDate()));
 
-        prefs = new SharedPrefs(EntryDetailActivity.this);
+        prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        prefsEditor = prefs.edit();
 
         // Back button action
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +107,7 @@ public class EntryDetailActivity extends AppCompatActivity {
                     //remove this activity from activity stack
                     EntryDetailActivity.this.finish();
 
-                    if (prefs.getBackupOption()) {
+                    if (prefs.getBoolean("backup?", false)) {
                         deleteEntryFromFirebase(entryId);
                     }
                 }
@@ -189,6 +191,11 @@ public class EntryDetailActivity extends AppCompatActivity {
                     DatabaseHandler dba = new DatabaseHandler(getApplicationContext());
                     dba.editEntry(editedEntry);
 
+                    // Apply the update to the firebase data
+                    if (prefs.getBoolean("backup?", false)) {
+                        updateFirebaseEntry(editedEntry);
+                    }
+
                     editDialog.dismiss();
                     EntryDetailActivity.this.finish();
                 }
@@ -196,6 +203,27 @@ public class EntryDetailActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void updateFirebaseEntry(Entry editedEntry) {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currUser = mAuth.getCurrentUser();
+        String currUserUID = currUser.getUid();
+
+        FirebaseDatabase.getInstance().getReference().child(currUserUID)
+                .child(Long.toString(editedEntry.getDate()))
+                .child("date")
+                .setValue(Long.toString(editedEntry.getDate()));
+
+        FirebaseDatabase.getInstance().getReference().child(currUserUID)
+                .child(Long.toString(editedEntry.getDate()))
+                .child("entryText")
+                .setValue(editedEntry.getText());
+
+        FirebaseDatabase.getInstance().getReference().child(currUserUID)
+                .child(Long.toString(editedEntry.getDate()))
+                .child("title")
+                .setValue(editedEntry.getTitle());
     }
 
     public void deleteEntryFromFirebase(long entryId) {

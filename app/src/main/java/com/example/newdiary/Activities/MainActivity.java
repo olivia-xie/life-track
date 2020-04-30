@@ -1,8 +1,10 @@
 package com.example.newdiary.Activities;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -10,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +25,6 @@ import android.widget.Toast;
 
 import com.example.newdiary.Data.DatabaseHandler;
 import com.example.newdiary.Data.EntryRecyclerViewAdapter;
-import com.example.newdiary.Data.SharedPrefs;
 import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseHandler databaseHandler;
     private CalendarView calendarView;
     private long selectedDate;
-    private SharedPrefs sharedPrefs;
+    private SharedPreferences sharedPrefs;
+    private SharedPreferences.Editor prefsEditor;
     private TextView noEntriesTextView;
     private FirebaseAuth mAuth;
     private FirebaseUser currUser;
@@ -61,12 +62,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        sharedPrefs = new SharedPrefs(MainActivity.this);
+        sharedPrefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        prefsEditor = sharedPrefs.edit();
 
         // Checks if lock screen has been enabled by user and starts lock screen activity if true
-        if (sharedPrefs.getPasscodeOption()) {
+        boolean passcodeOption = sharedPrefs.getBoolean("passcode?", false);
+        if (passcodeOption) {
                 Intent intent = new Intent(MainActivity.this, LockScreenActivity.class);
-                intent.putExtra("actualPIN", sharedPrefs.getPasscode());
                 startActivity(intent);
         }
 
@@ -80,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
                     for (DataSnapshot entry : dataSnapshot.getChildren()){
-
-                        //Toast.makeText(getApplicationContext(), entry.getKey(), Toast.LENGTH_LONG).show();
 
                         Entry newEntry = new Entry();
 
@@ -214,10 +214,10 @@ public class MainActivity extends AppCompatActivity {
     public void openSettingsDialog() {
 
         // Getting switch on/off preferences
-        boolean passcodeOption = sharedPrefs.getPasscodeOption();
+        boolean passcodeOption = sharedPrefs.getBoolean("passcode?", false);
 
         // Getting backup preferences
-        boolean backupOption = sharedPrefs.getBackupOption();
+        boolean backupOption = sharedPrefs.getBoolean("backup?", false);
 
         // Showing alert dialog
         settingsAlertDialogBuilder = new AlertDialog.Builder(this);
@@ -244,7 +244,8 @@ public class MainActivity extends AppCompatActivity {
                     createPinCodeDialog();
 
                 } else {
-                    sharedPrefs.setPasscodeOption(false);
+                    prefsEditor.putBoolean("passcode?", false);
+                    prefsEditor.apply();
                 }
             }
         });
@@ -254,11 +255,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    sharedPrefs.setBackupOption(true);
+                    prefsEditor.putBoolean("backup?", true);
+                    prefsEditor.apply();
                     backupAllDataToFirebase();
 
                 } else {
-                    sharedPrefs.setBackupOption(false);
+                    prefsEditor.putBoolean("backup?", false);
+                    prefsEditor.apply();
                 }
             }
         });
@@ -279,9 +282,10 @@ public class MainActivity extends AppCompatActivity {
                             mAuth.signOut();
 
                             // Remove PIN on sign out
-                            sharedPrefs.setPasscodeOption(false);
-                            sharedPrefs.setPasscode(null);
-                            sharedPrefs.setBackupOption(false);
+                            prefsEditor.putBoolean("passcode?", false);
+                            prefsEditor.putBoolean("backup?", false);
+                            prefsEditor.putString("pin", null);
+                            prefsEditor.apply();
 
                             // Clear local database on sign out
                             DatabaseHandler dbHandler = new DatabaseHandler(getApplicationContext());
@@ -330,8 +334,9 @@ public class MainActivity extends AppCompatActivity {
 
                     String PIN = passcodeEditText.getText().toString();
 
-                    sharedPrefs.setPasscodeOption(true);
-                    sharedPrefs.setPasscode(PIN);
+                    prefsEditor.putBoolean("passcode?", true);
+                    prefsEditor.putString("pin", PIN);
+                    prefsEditor.apply();
 
                     passcodeEditText.setText(null);
                     confirmEditText.setText(null);
@@ -386,13 +391,11 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(MainActivity.this, NewEntryActivity.class);
                 intent.putExtra("date", selectedDate);
-                intent.putExtra("backup?", sharedPrefs.getBackupOption());
 
                 calendarDialog.dismiss();
                 startActivity(intent);
             }
         });
-
     }
 
     public void backupAllDataToFirebase() {

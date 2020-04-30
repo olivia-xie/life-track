@@ -1,5 +1,7 @@
 package com.example.newdiary.Activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newdiary.Data.DatabaseHandler;
-import com.example.newdiary.Data.SharedPrefs;
 import com.example.newdiary.Models.Entry;
 import com.example.newdiary.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,7 +34,8 @@ public class NewEntryActivity extends AppCompatActivity {
     private DatabaseHandler dbHandler;
     private ImageButton backButton;
     private FirebaseAuth mAuth;
-    private SharedPrefs prefs;
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor prefsEditor;
     private Boolean backupOption;
 
     @Override
@@ -44,12 +46,15 @@ public class NewEntryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        prefsEditor = prefs.edit();
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
 
         entryDateMillis = getIntent().getLongExtra("date", 0);
         entryDate = dateFormat.format(entryDateMillis);
 
-        backupOption = getIntent().getBooleanExtra("backup?", false);
+        backupOption = prefs.getBoolean("backup?", false);
 
         dateTextView = findViewById(R.id.entryDateId);
         dateTextView.setText(entryDate);
