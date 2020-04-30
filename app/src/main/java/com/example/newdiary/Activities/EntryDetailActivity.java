@@ -3,6 +3,7 @@ package com.example.newdiary.Activities;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -24,6 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class EntryDetailActivity extends AppCompatActivity {
 
@@ -31,6 +34,10 @@ public class EntryDetailActivity extends AppCompatActivity {
     private long entryId;
     private Entry editedEntry;
     private SharedPrefs prefs;
+    private AlertDialog calendarDialog;
+    private AlertDialog.Builder calendarAlertDialogBuilder;
+    private CalendarView calendarView;
+    private long editedDate;
 
     private TextView detailDate, detailTitle, detailText;
     private ImageButton backButton;
@@ -129,12 +136,52 @@ public class EntryDetailActivity extends AppCompatActivity {
             titleEdit.setText(clickedEntry.getTitle());
             entryEdit.setText(clickedEntry.getText());
 
+            // Show calendar dialog when user clicks the date
+            dateEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    calendarAlertDialogBuilder = new AlertDialog.Builder(EntryDetailActivity.this);
+                    View view = getLayoutInflater().inflate(R.layout.calendar_dialog_view, null);
+
+                    Button okButton = view.findViewById(R.id.okButtonId);
+                    calendarView = view.findViewById(R.id.calendarId);
+
+                    calendarAlertDialogBuilder.setView(view);
+                    calendarDialog = calendarAlertDialogBuilder.create();
+                    calendarDialog.show();
+
+                    Calendar calendar = Calendar.getInstance();
+                    editedDate = calendar.getTimeInMillis();
+
+                    // Getting selected date from calendar calendarDialog
+                    calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                        @Override
+                        public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.set(year, month, dayOfMonth);
+                            editedDate = calendar.getTimeInMillis();
+                        }
+                    });
+
+                    // Starting new entry activity when ok button is clicked
+                    okButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dateEdit.setText(dateFormat.format(editedDate));
+                            calendarDialog.dismiss();
+                        }
+                    });
+                }
+            });
+
+            // Update the edited entry
             saveEditButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                     editedEntry = new Entry();
-                    //editedEntry.setDate(dateEdit.getText().toString());
+                    editedEntry.setDate(editedDate);
                     editedEntry.setTitle(titleEdit.getText().toString());
                     editedEntry.setText(entryEdit.getText().toString());
                     editedEntry.setEntryId(entryId);
@@ -146,9 +193,6 @@ public class EntryDetailActivity extends AppCompatActivity {
                     EntryDetailActivity.this.finish();
                 }
             });
-
-            //TODO: let user edit the entry date through a calendar view
-
         }
 
         return super.onOptionsItemSelected(item);
