@@ -61,8 +61,19 @@
         android:layout_below="@id/indicatorDotsId"
         android:layout_centerHorizontal="true"
         android:paddingTop="20dp"
+        android:paddingBottom="30dp"
         app:keypadTextColor="#8B000000"
         app:pinLength="4" />
+
+    <Button
+        android:id="@+id/useBiometricButtonId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pinLockViewId"
+        android:layout_centerHorizontal="true"
+        android:background="@null"
+        android:fontFamily="@font/kingthings"
+        android:text="Or Use Fingerprint" />
 
 
 </RelativeLayout>
