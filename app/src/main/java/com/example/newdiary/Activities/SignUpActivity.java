@@ -30,6 +30,9 @@ public class SignUpActivity extends AppCompatActivity {
     private Button signInButton;
     private Button signUpOptionButton;
 
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
+
     private AlertDialog.Builder signInAlertDialogBuilder;
     private AlertDialog signInDialog;
 
@@ -41,8 +44,8 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        SharedPreferences preferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
+        preferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        editor = preferences.edit();
         editor.apply();
 
         emailEditText = findViewById(R.id.emailEditTextId);
@@ -83,9 +86,17 @@ public class SignUpActivity extends AppCompatActivity {
 
         // If user is already logged in
         if (currentUser != null) {
-            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            // Checks if lock screen has been enabled by user and starts lock screen activity if true
+            boolean passcodeOption = preferences.getBoolean("passcode?", false);
+            if (passcodeOption) {
+                Intent passcodeIntent = new Intent(SignUpActivity.this, LockScreenActivity.class);
+                startActivity(passcodeIntent);
+                finish();
+            } else {
+                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
     }
 

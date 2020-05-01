@@ -1,6 +1,7 @@
 package com.example.newdiary.Activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,15 +40,14 @@ public class LockScreenActivity extends AppCompatActivity {
         // Lock screen pin pad listener
         pinLockView.setPinLockListener(new PinLockListener() {
 
-            boolean visible;
-
             @Override
             public void onComplete(String pin) {
 
                 if (pin.equals(actualPIN)) {
+                    Intent intent = new Intent(LockScreenActivity.this, MainActivity.class);
+                    startActivity(intent);
                     finish();
                 } else {
-
                     promptText.setText("Incorrect PIN. Please try again.");
                     pinLockView.resetPinLockView();
                 }

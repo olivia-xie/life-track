@@ -65,13 +65,6 @@ public class MainActivity extends AppCompatActivity {
         sharedPrefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
         prefsEditor = sharedPrefs.edit();
 
-        // Checks if lock screen has been enabled by user and starts lock screen activity if true
-        boolean passcodeOption = sharedPrefs.getBoolean("passcode?", false);
-        if (passcodeOption) {
-                Intent intent = new Intent(MainActivity.this, LockScreenActivity.class);
-                startActivity(intent);
-        }
-
         mAuth = FirebaseAuth.getInstance();
         currUser = mAuth.getCurrentUser();
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child(currUser.getUid());
@@ -245,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
 
                 } else {
                     prefsEditor.putBoolean("passcode?", false);
+                    prefsEditor.putString("pin", null);
                     prefsEditor.apply();
                 }
             }
