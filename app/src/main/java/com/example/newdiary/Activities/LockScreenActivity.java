@@ -95,18 +95,6 @@ public class LockScreenActivity extends AppCompatActivity {
         useFingerprintButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(LockScreenActivity.this);
-                builder.setTitle("Authenticate Using Fingerprint")
-                        .setMessage("Please place your finger on the fingerprint sensor to authenticate.")
-                        .setCancelable(true)
-                        .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        })
-                        .create()
-                        .show();
 
                 biometricPrompt = new BiometricPrompt.Builder(LockScreenActivity.this)
                         .setTitle("Authenticate Using Fingerprint")
@@ -161,7 +149,6 @@ public class LockScreenActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationError(int errorCode, CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
-                Toast.makeText(getApplicationContext(), "Something went wrong. Try again.", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -172,7 +159,6 @@ public class LockScreenActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
-                Toast.makeText(LockScreenActivity.this, "Fingerprint failed, try again.", Toast.LENGTH_LONG).show();
             }
 
             @Override

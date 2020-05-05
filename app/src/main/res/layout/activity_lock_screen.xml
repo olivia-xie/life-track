@@ -8,6 +8,7 @@
     tools:context=".Activities.LockScreenActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -38,7 +39,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/indicatorDotsId"
+        android:paddingTop="50dp"
         android:layout_centerHorizontal="true"
+        android:gravity="top"
         android:fontFamily="@font/kingthings"
         android:paddingBottom="50dp"
         android:text="@string/enter_pin"
@@ -50,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
+        android:gravity="center"
         app:dotDiameter="15dp"
         app:dotEmptyBackground="@drawable/ic_action_panorama_fish_eye"
         app:dotFilledBackground="@drawable/ic_action_lens" />
@@ -61,7 +65,7 @@
         android:layout_below="@id/indicatorDotsId"
         android:layout_centerHorizontal="true"
         android:paddingTop="20dp"
-        android:paddingBottom="30dp"
+        android:paddingBottom="20dp"
         app:keypadTextColor="#8B000000"
         app:pinLength="4" />
 
