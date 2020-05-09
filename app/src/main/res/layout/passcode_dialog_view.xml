@@ -23,7 +23,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/passwordEditTextId"
+                android:id="@+id/pinEditTextId"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/signInTitleId"
@@ -39,15 +39,30 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/signInPasswordEditTextId"
+            android:id="@+id/confirmPinEditTextId"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pinEditTextId"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/kingthings"
+            android:gravity="center"
+            android:hint="@string/confirm_pin"
+            android:inputType="numberPassword"
+            android:maxLength="4"
+            android:paddingTop="10dp"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/pinHintEditTextId"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/passwordEditTextId"
+                android:layout_below="@id/confirmPinEditTextId"
                 android:layout_centerHorizontal="true"
                 android:fontFamily="@font/kingthings"
                 android:gravity="center"
-                android:hint="@string/confirm_pin"
-                android:inputType="numberPassword"
+                android:hint="PIN Hint"
                 android:maxLength="4"
                 android:paddingTop="10dp"
                 android:textColor="@android:color/black"
@@ -58,8 +73,8 @@
                 android:id="@+id/signInButtonId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/signInPasswordEditTextId"
-                android:background="@color/colorAccent"
+                android:layout_below="@id/pinHintEditTextId"
+                android:background="?android:attr/colorAccent"
                 android:fontFamily="@font/kingthings"
                 android:text="@string/set_pin"
                 android:textColor="@android:color/white"

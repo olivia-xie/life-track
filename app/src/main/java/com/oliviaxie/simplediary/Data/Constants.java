@@ -1,4 +1,4 @@
-package com.example.newdiary.Data;
+package com.oliviaxie.simplediary.Data;
 
 public class Constants {
 

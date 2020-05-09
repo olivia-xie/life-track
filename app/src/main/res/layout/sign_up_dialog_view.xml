@@ -69,7 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/confirmPasswordEditTextId"
-                android:background="@color/colorAccent"
+                android:background="?android:attr/colorAccent"
                 android:fontFamily="@font/kingthings"
                 android:text="sign up"
                 android:textColor="@android:color/white"

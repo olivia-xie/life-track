@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:76348716912:android:a799fe8d67fbd1d1bb81b5",
         "android_client_info": {
-          "package_name": "com.example.newdiary"
+          "package_name": "com.oliviaxie.simplediary"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "76348716912-9tvpu6t003ar3cv7ofoal0tvmkmtmqim.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.newdiary",
+            "package_name": "com.oliviaxie.simplediary",
             "certificate_hash": "cf0d9c13f071b57457b0e09e746809863443e39a"
           }
         },
@@ -26,7 +26,7 @@
           "client_id": "76348716912-iefte6djchs1jiaav12us1eoe2ko50h4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.newdiary",
+            "package_name": "com.oliviaxie.simplediary",
             "certificate_hash": "97fe1b3d7d32f48ade85683d838ebe0dcf6c543b"
           }
         },

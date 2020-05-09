@@ -1,4 +1,4 @@
-package com.example.newdiary.Activities;
+package com.oliviaxie.simplediary.Activities;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -16,14 +16,13 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.newdiary.Data.DatabaseHandler;
-import com.example.newdiary.Models.Entry;
-import com.example.newdiary.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.oliviaxie.simplediary.Data.DatabaseHandler;
+import com.oliviaxie.simplediary.Models.Entry;
+import com.oliviaxie.simplediary.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -34,7 +33,6 @@ public class EntryDetailActivity extends AppCompatActivity {
     private long entryId;
     private Entry editedEntry;
     private SharedPreferences prefs;
-    private SharedPreferences.Editor prefsEditor;
     private AlertDialog calendarDialog;
     private AlertDialog.Builder calendarAlertDialogBuilder;
     private CalendarView calendarView;
@@ -46,6 +44,11 @@ public class EntryDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Setting color theme
+        prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        String themePref = prefs.getString("theme", "blue");
+        setColorTheme(themePref);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entry_detail);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -66,9 +69,6 @@ public class EntryDetailActivity extends AppCompatActivity {
         detailText.setText(clickedEntry.getText());
         detailDate.setText(dateFormat.format(clickedEntry.getDate()));
 
-        prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
-        prefsEditor = prefs.edit();
-
         // Back button action
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +83,6 @@ public class EntryDetailActivity extends AppCompatActivity {
 
         getMenuInflater().inflate(R.menu.menu_detail, menu);
         return true;
-
     }
 
     // Opening delete alert dialog from menu delete button
@@ -96,7 +95,7 @@ public class EntryDetailActivity extends AppCompatActivity {
 
             AlertDialog.Builder alert = new AlertDialog.Builder(EntryDetailActivity.this);
             alert.setTitle("Delete?");
-            alert.setMessage("Are you sure you want to delete this entry? Backups will be deleted as well if you have selected the backup option.");
+            alert.setMessage("Are you sure you want to delete this entry?");
             alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -110,6 +109,7 @@ public class EntryDetailActivity extends AppCompatActivity {
                     if (prefs.getBoolean("backup?", false)) {
                         deleteEntryFromFirebase(entryId);
                     }
+
                 }
             });
 
@@ -137,6 +137,8 @@ public class EntryDetailActivity extends AppCompatActivity {
             dateEdit.setText(dateFormat.format(clickedEntry.getDate()));
             titleEdit.setText(clickedEntry.getTitle());
             entryEdit.setText(clickedEntry.getText());
+
+            editedDate = clickedEntry.getDate();
 
             // Show calendar dialog when user clicks the date
             dateEdit.setOnClickListener(new View.OnClickListener() {
@@ -201,7 +203,6 @@ public class EntryDetailActivity extends AppCompatActivity {
                 }
             });
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -211,17 +212,17 @@ public class EntryDetailActivity extends AppCompatActivity {
         String currUserUID = currUser.getUid();
 
         FirebaseDatabase.getInstance().getReference().child(currUserUID)
-                .child(Long.toString(editedEntry.getDate()))
+                .child(Long.toString(editedEntry.getEntryId()))
                 .child("date")
                 .setValue(Long.toString(editedEntry.getDate()));
 
         FirebaseDatabase.getInstance().getReference().child(currUserUID)
-                .child(Long.toString(editedEntry.getDate()))
+                .child(Long.toString(editedEntry.getEntryId()))
                 .child("entryText")
                 .setValue(editedEntry.getText());
 
         FirebaseDatabase.getInstance().getReference().child(currUserUID)
-                .child(Long.toString(editedEntry.getDate()))
+                .child(Long.toString(editedEntry.getEntryId()))
                 .child("title")
                 .setValue(editedEntry.getTitle());
     }
@@ -237,5 +238,26 @@ public class EntryDetailActivity extends AppCompatActivity {
                 .removeValue();
     }
 
-
+    public void setColorTheme(String themePref) {
+        switch (themePref) {
+            case "blue":
+                setTheme(R.style.BlueTheme);
+                break;
+            case "pink":
+                setTheme(R.style.PinkTheme);
+                break;
+            case "purple":
+                setTheme(R.style.PurpleTheme);
+                break;
+            case "yellow":
+                setTheme(R.style.YellowTheme);
+                break;
+            case "green":
+                setTheme(R.style.GreenTheme);
+                break;
+            case "orange":
+                setTheme(R.style.OrangeTheme);
+                break;
+        }
+    }
 }

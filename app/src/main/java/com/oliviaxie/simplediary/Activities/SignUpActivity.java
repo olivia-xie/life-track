@@ -1,10 +1,9 @@
-package com.example.newdiary.Activities;
+package com.oliviaxie.simplediary.Activities;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.newdiary.R;
+import com.oliviaxie.simplediary.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -41,12 +40,15 @@ public class SignUpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
-
         preferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
         editor = preferences.edit();
-        editor.apply();
+
+        // Setting color theme
+        String themePref = preferences.getString("theme", "blue");
+        setColorTheme(themePref);
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sign_up);
 
         emailEditText = findViewById(R.id.emailEditTextId);
         passwordEditText = findViewById(R.id.passwordEditTextId);
@@ -167,7 +169,7 @@ public class SignUpActivity extends AppCompatActivity {
                 Editable confirmPass = confirmPassEditText.getText();
 
                 if (password.equals(confirmPass) && email != null && password != null &&
-                    confirmPass != null) {
+                        confirmPass != null) {
                     createAccount(email.toString().trim(), password.toString().trim());
                 } else {
                     Toast.makeText(getApplicationContext(), "Error signing up.", Toast.LENGTH_LONG)
@@ -178,4 +180,27 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+    public void setColorTheme(String themePref) {
+
+        switch (themePref) {
+            case "blue":
+                setTheme(R.style.BlueTheme);
+                break;
+            case "pink":
+                setTheme(R.style.PinkTheme);
+                break;
+            case "purple":
+                setTheme(R.style.PurpleTheme);
+                break;
+            case "yellow":
+                setTheme(R.style.YellowTheme);
+                break;
+            case "green":
+                setTheme(R.style.GreenTheme);
+                break;
+            case "orange":
+                setTheme(R.style.OrangeTheme);
+                break;
+        }
+    }
 }

@@ -16,26 +16,43 @@
         android:padding="18dp"
         android:textSize="19sp" />
 
-    <TextView
-        android:id="@+id/detailTitleId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/detailDateId"
-        android:fontFamily="@font/kingthings"
-        android:padding="18dp"
-        android:textColor="#AE000000"
-        android:textSize="19sp" />
-
-    <TextView
-        android:id="@+id/detailTextId"
+    <ScrollView
+        android:id="@+id/titleScrollviewId"
         android:layout_width="match_parent"
-        android:layout_height="550dp"
-        android:layout_below="@id/detailTitleId"
-        android:fontFamily="@font/kingthings"
-        android:gravity="top|left"
-        android:lineSpacingExtra="5dp"
-        android:padding="18dp"
-        android:textColor="#AE000000"
-        android:textSize="16sp" />
+        android:layout_height="100dp"
+        android:scrollbars="vertical"
+        android:fillViewport="true"
+        android:layout_below="@id/detailDateId">
+
+        <TextView
+            android:id="@+id/detailTitleId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/detailDateId"
+            android:fontFamily="@font/kingthings"
+            android:padding="18dp"
+            android:textColor="#AE000000"
+            android:textSize="19sp" />
+
+    </ScrollView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:fillViewport="true"
+        android:layout_below="@id/titleScrollviewId">
+
+        <TextView
+            android:id="@+id/detailTextId"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/kingthings"
+            android:gravity="top|left"
+            android:lineSpacingExtra="5dp"
+            android:padding="18dp"
+            android:textColor="#AE000000"
+            android:textSize="16sp" />
+    </ScrollView>
 
 </RelativeLayout>

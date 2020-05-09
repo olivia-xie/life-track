@@ -1,11 +1,10 @@
-package com.example.newdiary.Activities;
+package com.oliviaxie.simplediary.Activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,12 +13,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.newdiary.Data.DatabaseHandler;
-import com.example.newdiary.Models.Entry;
-import com.example.newdiary.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.oliviaxie.simplediary.Data.DatabaseHandler;
+import com.oliviaxie.simplediary.Models.Entry;
+import com.oliviaxie.simplediary.R;
 
 import java.text.SimpleDateFormat;
 
@@ -33,28 +32,30 @@ public class NewEntryActivity extends AppCompatActivity {
     private EditText entryEditText;
     private DatabaseHandler dbHandler;
     private ImageButton backButton;
-    private FirebaseAuth mAuth;
     private SharedPreferences prefs;
-    private SharedPreferences.Editor prefsEditor;
-    private Boolean backupOption;
+    private boolean backupOption;
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Setting color theme
+        prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        String themePref = prefs.getString("theme", "blue");
+        setColorTheme(themePref);
+
+        backupOption = prefs.getBoolean("backup?", false);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_entry);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
-        prefsEditor = prefs.edit();
-
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
 
         entryDateMillis = getIntent().getLongExtra("date", 0);
         entryDate = dateFormat.format(entryDateMillis);
-
-        backupOption = prefs.getBoolean("backup?", false);
 
         dateTextView = findViewById(R.id.entryDateId);
         dateTextView.setText(entryDate);
@@ -71,7 +72,6 @@ public class NewEntryActivity extends AppCompatActivity {
         });
 
         dbHandler = new DatabaseHandler(NewEntryActivity.this);
-
     }
 
     @Override
@@ -79,7 +79,6 @@ public class NewEntryActivity extends AppCompatActivity {
 
         getMenuInflater().inflate(R.menu.menu_save, menu);
         return true;
-
     }
 
     // Opening Search alert dialog from menu Search button
@@ -158,4 +157,27 @@ public class NewEntryActivity extends AppCompatActivity {
         }
     }
 
+    public void setColorTheme(String themePref) {
+
+        switch (themePref) {
+            case "blue":
+                setTheme(R.style.BlueTheme);
+                break;
+            case "pink":
+                setTheme(R.style.PinkTheme);
+                break;
+            case "purple":
+                setTheme(R.style.PurpleTheme);
+                break;
+            case "yellow":
+                setTheme(R.style.YellowTheme);
+                break;
+            case "green":
+                setTheme(R.style.GreenTheme);
+                break;
+            case "orange":
+                setTheme(R.style.OrangeTheme);
+                break;
+        }
+    }
 }

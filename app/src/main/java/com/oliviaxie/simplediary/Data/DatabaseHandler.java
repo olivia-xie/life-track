@@ -1,15 +1,12 @@
-package com.example.newdiary.Data;
+package com.oliviaxie.simplediary.Data;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.constraint.ConstraintLayout;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.example.newdiary.Models.Entry;
+import com.oliviaxie.simplediary.Models.Entry;
 
 import java.util.ArrayList;
 
@@ -64,7 +61,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         db.update(Constants.TABLE_NAME, values, Constants.KEY_ID + "=" + entry.getEntryId(), null);
         db.close();
-
     }
 
     // Add an entry
@@ -116,7 +112,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         dba.close();
 
         return entryList;
-
     }
 
     public void clearTable() {

@@ -1,19 +1,17 @@
-package com.example.newdiary.Data;
+package com.oliviaxie.simplediary.Data;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.newdiary.Activities.EntryDetailActivity;
-import com.example.newdiary.Models.Entry;
-import com.example.newdiary.R;
+import com.oliviaxie.simplediary.Activities.EntryDetailActivity;
+import com.oliviaxie.simplediary.Models.Entry;
+import com.oliviaxie.simplediary.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,9 +51,7 @@ public class EntryRecyclerViewAdapter extends RecyclerView.Adapter<EntryRecycler
 
             String entryText = entry.getText();
             viewHolder.text.setText(entryText);
-
         }
-
     }
 
     @Override
@@ -92,16 +88,11 @@ public class EntryRecyclerViewAdapter extends RecyclerView.Adapter<EntryRecycler
                     Intent intent = new Intent(context, EntryDetailActivity.class);
                     intent.putExtra("clickedEntry", clickedEntry);
                     ctx.startActivity(intent);
-
                 }
             });
         }
 
         @Override
-        public void onClick(View v) {
-
-
-
-        }
+        public void onClick(View v) {}
     }
 }

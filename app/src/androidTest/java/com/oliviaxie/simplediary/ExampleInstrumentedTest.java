@@ -1,4 +1,4 @@
-package com.example.newdiary;
+package com.oliviaxie.simplediary;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

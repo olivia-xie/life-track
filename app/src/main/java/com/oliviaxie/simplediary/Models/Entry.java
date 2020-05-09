@@ -1,4 +1,4 @@
-package com.example.newdiary.Models;
+package com.oliviaxie.simplediary.Models;
 
 import java.io.Serializable;
 
@@ -10,13 +10,6 @@ public class Entry implements Serializable {
     private long entryId;
 
     public Entry() {
-    }
-
-    public Entry(String text, long date, String title, long id) {
-        this.text = text;
-        this.date = date;
-        this.title = title;
-        this.entryId = id;
     }
 
     public String getText() {

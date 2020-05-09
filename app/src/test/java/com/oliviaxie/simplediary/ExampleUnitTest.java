@@ -1,4 +1,4 @@
-package com.example.newdiary;
+package com.oliviaxie.simplediary;
 
 import org.junit.Test;
 

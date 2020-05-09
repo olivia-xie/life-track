@@ -13,43 +13,62 @@
         android:textAllCaps="false"
         android:textSize="19sp" />
 
-    <EditText
-        android:id="@+id/editTitleId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editDateButtonId"
-        android:background="@android:color/transparent"
-        android:fontFamily="@font/kingthings"
-        android:hint="@string/Title"
-        android:padding="18dp"
-        android:textColor="#AE000000"
-        android:textColorHint="#949494"
-        android:textSize="19sp" />
-
-    <EditText
-        android:id="@+id/editEntryId"
+    <ScrollView
+        android:id="@+id/editTitleScrollviewId"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTitleId"
-        android:background="@android:color/transparent"
-        android:fontFamily="@font/kingthings"
-        android:gravity="top|start"
-        android:hint="@string/how_was_your_day_today"
-        android:lineSpacingExtra="5dp"
-        android:padding="18dp"
-        android:textColor="#AE000000"
-        android:textColorHint="#949494"
-        android:textSize="16sp" />
+        android:layout_height="100dp"
+        android:scrollbars="vertical"
+        android:fillViewport="true"
+        android:layout_below="@id/editDateButtonId">
+
+        <EditText
+            android:id="@+id/editTitleId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/kingthings"
+            android:hint="@string/Title"
+            android:padding="18dp"
+            android:textColor="#AE000000"
+            android:textColorHint="#949494"
+            android:textSize="19sp" />
+
+    </ScrollView>
 
     <Button
         android:id="@+id/saveEditButtonId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editEntryId"
-        android:background="@color/colorAccent"
+        android:background="?android:attr/colorAccent"
         android:fontFamily="@font/kingthings"
         android:text="@string/save"
         android:textColor="@android:color/white"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"/>
+
+    <ScrollView
+        android:id="@+id/scrollviewId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:fillViewport="true"
+        android:layout_below="@id/editTitleScrollviewId"
+        android:layout_above="@id/saveEditButtonId">
+
+        <EditText
+            android:id="@+id/editEntryId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/kingthings"
+            android:gravity="top|start"
+            android:hint="@string/how_was_your_day_today"
+            android:lineSpacingExtra="5dp"
+            android:padding="18dp"
+            android:textColor="#AE000000"
+            android:textColorHint="#949494"
+            android:textSize="16sp" />
+
+    </ScrollView>
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.example.newdiary.Activities;
+package com.oliviaxie.simplediary.Activities;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,14 +19,11 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.newdiary.Data.DatabaseHandler;
-import com.example.newdiary.Data.EntryRecyclerViewAdapter;
-import com.example.newdiary.Models.Entry;
-import com.example.newdiary.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,6 +31,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.oliviaxie.simplediary.Data.DatabaseHandler;
+import com.oliviaxie.simplediary.Data.EntryRecyclerViewAdapter;
+import com.oliviaxie.simplediary.Models.Entry;
+import com.oliviaxie.simplediary.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,9 +44,13 @@ public class MainActivity extends AppCompatActivity {
     private AlertDialog.Builder calendarAlertDialogBuilder;
     private AlertDialog.Builder settingsAlertDialogBuilder;
     private AlertDialog.Builder passcodeAlertDialogBuilder;
+    private AlertDialog.Builder changeThemeAlertDialogBuilder;
+
     private AlertDialog calendarDialog;
     private AlertDialog settingsDialog;
     private AlertDialog passcodeDialog;
+    private AlertDialog changeThemeDialog;
+
     private Entry myEntry;
     private ArrayList<Entry> entriesList = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -56,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sharedPrefs;
     private SharedPreferences.Editor prefsEditor;
     private TextView noEntriesTextView;
+    private ImageButton changeThemeButton;
+
     private FirebaseAuth mAuth;
     private FirebaseUser currUser;
 
@@ -64,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPrefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
         prefsEditor = sharedPrefs.edit();
+
+        // Setting color theme
+        String themePref = sharedPrefs.getString("theme", "blue");
+        setColorTheme(themePref);
 
         mAuth = FirebaseAuth.getInstance();
         currUser = mAuth.getCurrentUser();
@@ -107,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -132,8 +142,15 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewId);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        refreshData();
+        changeThemeButton = findViewById(R.id.paletteButtonId);
+        changeThemeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openChangeThemeDialog();
+            }
+        });
 
+        refreshData();
     }
 
     @Override
@@ -200,10 +217,9 @@ public class MainActivity extends AppCompatActivity {
         entryRecyclerViewAdapter = new EntryRecyclerViewAdapter(this, entriesList);
         recyclerView.setAdapter(entryRecyclerViewAdapter);
         entryRecyclerViewAdapter.notifyDataSetChanged();
-
     }
 
-    // Shows settings alert dialog where user can add passcode protection and backup data
+    // Shows settings alert dialog where user can add passcode protection and log out
     public void openSettingsDialog() {
 
         // Getting switch on/off preferences
@@ -311,11 +327,12 @@ public class MainActivity extends AppCompatActivity {
         passcodeDialog = passcodeAlertDialogBuilder.create();
         passcodeDialog.show();
 
-        final EditText passcodeEditText, confirmEditText;
+        final EditText passcodeEditText, confirmEditText, passcodeHintEditText;
         Button setPasscodeButton;
 
-        passcodeEditText = v.findViewById(R.id.passwordEditTextId);
-        confirmEditText = v.findViewById(R.id.signInPasswordEditTextId);
+        passcodeEditText = v.findViewById(R.id.pinEditTextId);
+        confirmEditText = v.findViewById(R.id.confirmPinEditTextId);
+        passcodeHintEditText = v.findViewById(R.id.pinHintEditTextId);
         setPasscodeButton = v.findViewById(R.id.signInButtonId);
 
         // Verify if the new PIN is a valid PIN and sets the PIN if so
@@ -324,24 +341,29 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if ((passcodeEditText.getText().length() != 0) && (confirmEditText.getText().length() != 0) &&
-                        (passcodeEditText.getText().toString().equals(confirmEditText.getText().toString()))) {
+                        (passcodeEditText.getText().toString().equals(confirmEditText.getText().toString())) &&
+                        (passcodeHintEditText.getText().length() != 0)) {
 
                     String PIN = passcodeEditText.getText().toString();
+                    String pinHint = passcodeHintEditText.getText().toString();
 
                     prefsEditor.putBoolean("passcode?", true);
                     prefsEditor.putString("pin", PIN);
+                    prefsEditor.putString("pinHint", pinHint);
                     prefsEditor.apply();
 
                     passcodeEditText.setText(null);
                     confirmEditText.setText(null);
+                    passcodeHintEditText.setText(null);
 
                     passcodeDialog.dismiss();
                     Toast.makeText(getApplicationContext(), "PIN successfully set.", Toast.LENGTH_LONG).show();
-
                 } else if ((passcodeEditText.getText().length() == 0) || (confirmEditText.getText().length() == 0)) {
 
                     Toast.makeText(getApplicationContext(), "PIN cannot be empty.", Toast.LENGTH_LONG).show();
+                } else if (passcodeHintEditText.getText().length() == 0) {
 
+                    Toast.makeText(getApplicationContext(), "Enter a hint to remember your PIN", Toast.LENGTH_LONG).show();
                 } else {
 
                     Toast.makeText(getApplicationContext(), "PINs do not match.", Toast.LENGTH_LONG).show();
@@ -420,5 +442,108 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    // Creates dialog to change application's color theme
+    public void openChangeThemeDialog() {
+        changeThemeAlertDialogBuilder = new AlertDialog.Builder(this);
+        View v = getLayoutInflater().inflate(R.layout.theme_change_dialog_view, null);
+
+        changeThemeAlertDialogBuilder.setView(v);
+        changeThemeDialog = changeThemeAlertDialogBuilder.create();
+        changeThemeDialog.show();
+
+        Button blueTheme, pinkTheme, purpleTheme, greenTheme, yellowTheme, orangeTheme;
+
+        blueTheme = v.findViewById(R.id.blueThemeButtonId);
+        blueTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeThemeDialog.dismiss();
+                prefsEditor.putString("theme", "blue");
+                prefsEditor.apply();
+                recreate();
+
+            }
+        });
+
+        pinkTheme = v.findViewById(R.id.pinkThemeButtonId);
+        pinkTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeThemeDialog.dismiss();
+                prefsEditor.putString("theme", "pink");
+                prefsEditor.apply();
+                recreate();
+            }
+        });
+
+        purpleTheme = v.findViewById(R.id.purpleThemeButtonId);
+        purpleTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeThemeDialog.dismiss();
+                prefsEditor.putString("theme", "purple");
+                prefsEditor.apply();
+                recreate();
+            }
+        });
+
+        greenTheme = v.findViewById(R.id.greenThemeButtonId);
+        greenTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeThemeDialog.dismiss();
+                prefsEditor.putString("theme", "green");
+                prefsEditor.apply();
+                recreate();
+            }
+        });
+
+        yellowTheme = v.findViewById(R.id.yellowThemeButtonId);
+        yellowTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeThemeDialog.dismiss();
+                prefsEditor.putString("theme", "yellow");
+                prefsEditor.apply();
+                recreate();
+            }
+        });
+
+        orangeTheme = v.findViewById(R.id.orangeThemeButtonId);
+        orangeTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeThemeDialog.dismiss();
+                prefsEditor.putString("theme", "orange");
+                prefsEditor.apply();
+                recreate();
+            }
+        });
+    }
+
+    public void setColorTheme(String themePref) {
+
+        switch (themePref) {
+            case "blue":
+                setTheme(R.style.BlueTheme);
+                break;
+            case "pink":
+                setTheme(R.style.PinkTheme);
+                break;
+            case "purple":
+                setTheme(R.style.PurpleTheme);
+                break;
+            case "yellow":
+                setTheme(R.style.YellowTheme);
+                break;
+            case "green":
+                setTheme(R.style.GreenTheme);
+                break;
+            case "orange":
+                setTheme(R.style.OrangeTheme);
+                break;
+        }
     }
 }

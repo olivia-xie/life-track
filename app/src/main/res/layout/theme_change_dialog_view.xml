@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="25dp">
+
+            <TextView
+                android:id="@+id/changeThemeTitleId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingBottom="20dp"
+                android:fontFamily="@font/kingthings"
+                android:text="Change Theme"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/changeThemeTitleId"
+                android:gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/blueThemeButtonId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:elevation="0dp"
+                    android:background="@color/blueColorPrimary"/>
+
+                <Button
+                    android:id="@+id/pinkThemeButtonId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/blueThemeButtonId"
+                    android:elevation="0dp"
+                    android:background="@color/pinkColorPrimary"/>
+
+                <Button
+                    android:id="@+id/purpleThemeButtonId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/pinkThemeButtonId"
+                    android:elevation="0dp"
+                    android:background="@color/purpleColorPrimary"/>
+
+                <Button
+                    android:id="@+id/yellowThemeButtonId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/blueThemeButtonId"
+                    android:background="@color/yellowColorPrimary"
+                    android:elevation="0dp"/>
+
+                <Button
+                    android:id="@+id/greenThemeButtonId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/yellowThemeButtonId"
+                    android:layout_below="@id/pinkThemeButtonId"
+                    android:background="@color/greenColorPrimary"
+                    android:elevation="0dp"/>
+
+                <Button
+                    android:id="@+id/orangeThemeButtonId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/greenThemeButtonId"
+                    android:layout_below="@id/purpleThemeButtonId"
+                    android:background="@color/orangeColorPrimary"
+                    android:elevation="0dp"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</android.support.constraint.ConstraintLayout>

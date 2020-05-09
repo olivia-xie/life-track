@@ -10,14 +10,13 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="?android:attr/colorPrimary"
             app:title=" ">
 
             <TextView
@@ -34,50 +33,40 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <TextView
-        android:id="@+id/promptTextId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/indicatorDotsId"
-        android:paddingTop="50dp"
-        android:layout_centerHorizontal="true"
-        android:gravity="top"
-        android:fontFamily="@font/kingthings"
-        android:paddingBottom="50dp"
-        android:text="@string/enter_pin"
-        android:textSize="18sp" />
+            <TextView
+                android:id="@+id/promptTextId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/indicatorDotsId"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/kingthings"
+                android:paddingBottom="50dp"
+                android:text="@string/enter_pin"
+                android:textSize="18sp"/>
 
-    <com.andrognito.pinlockview.IndicatorDots
-        android:id="@+id/indicatorDotsId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        app:dotDiameter="15dp"
-        app:dotEmptyBackground="@drawable/ic_action_panorama_fish_eye"
-        app:dotFilledBackground="@drawable/ic_action_lens" />
+            <com.andrognito.pinlockview.IndicatorDots
+                android:id="@+id/indicatorDotsId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                app:dotDiameter="15dp"
+                app:dotEmptyBackground="@drawable/unfilled_dot"
+                app:dotFilledBackground="@drawable/filled_dot" />
 
-    <com.andrognito.pinlockview.PinLockView
-        android:id="@+id/pinLockViewId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/indicatorDotsId"
-        android:layout_centerHorizontal="true"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        app:keypadTextColor="#8B000000"
-        app:pinLength="4" />
-
-    <Button
-        android:id="@+id/useBiometricButtonId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pinLockViewId"
-        android:layout_centerHorizontal="true"
-        android:background="@null"
-        android:fontFamily="@font/kingthings"
-        android:text="Or Use Fingerprint" />
-
+            <com.andrognito.pinlockview.PinLockView
+                android:id="@+id/pinLockViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:keypadTextColor="#AE000000"
+                app:keypadVerticalSpacing="10dp"
+                app:keypadHorizontalSpacing="10dp"
+                android:layout_below="@id/indicatorDotsId"
+                android:layout_centerHorizontal="true"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                app:pinLength="4"
+                app:keypadButtonBackgroundDrawable="@drawable/pin_view_button_background"/>
 
 </RelativeLayout>

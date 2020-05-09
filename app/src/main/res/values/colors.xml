@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#D6EDFF</color>
-    <color name="colorStatusBar">#C9DEF3</color>
-    <color name="colorAccent">#C9DEF3</color>
+    <color name="blueColorPrimary">#D6EDFF</color>
+    <color name="blueColorPrimaryDark">#C9DEF3</color>
+    <color name="blueColorAccent">#C9DEF3</color>
+
+    <color name="pinkColorPrimary">#FFE6EF</color>
+    <color name="pinkColorPrimaryDark">#FAE0E7</color>
+    <color name="pinkColorAccent">#FAE0EA</color>
+
+    <color name="purpleColorPrimary">#E9E1F8</color>
+    <color name="purpleColorPrimaryDark">#E3D8F3</color>
+    <color name="purpleColorAccent">#DAD6EB</color>
+
+    <color name="yellowColorPrimary">#FFF8D1</color>
+    <color name="yellowColorPrimaryDark">#FFF2C4</color>
+    <color name="yellowColorAccent">#F7F0BD</color>
+
+    <color name="greenColorPrimary">#E0FAD5</color>
+    <color name="greenColorPrimaryDark">#D1F5CB</color>
+    <color name="greenColorAccent">#D4ECCE</color>
+
+    <color name="orangeColorPrimary">#F7FFD2B7</color>
+    <color name="orangeColorPrimaryDark">#F7F8C2A4</color>
+    <color name="orangeColorAccent">#E2FFBB9C</color>
 </resources>
