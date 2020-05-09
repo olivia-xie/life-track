@@ -4,7 +4,7 @@ Simple Diary is a minimalist diary app which can be used to track and record eve
 
 ## Features
 
-**1. Secure diary entries using passcode protection**
+**1. Secure diary entries using passcode protection or biometric authentication**
 
 ![Enter passcode](/demo/lockscreen.jpg)
 
