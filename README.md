@@ -22,4 +22,4 @@ Simple Diary is a minimalist diary app which can be used to track and record eve
 
 ## Built With
 
-* Java, XML, Firebase in Android Studio
+* Java, XML, SQLite, Firebase in Android Studio
