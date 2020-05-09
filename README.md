@@ -1,25 +1,25 @@
-# life-track
+# simple-diary
 
-Life Track is a simple diary app which can be used to track and record everyday events and experiences. 
+Simple Diary is a minimalist diary app which can be used to track and record everyday events and experiences. 
 
 ## Features
 
-**1. Add Passcode Protection**
+**1. Secure diary entries using passcode protection**
 
-![Create passcode](/demo/set-password-demo.gif) ![Enter passcode](/demo/password-demo.gif) ![Wrong passcode](/demo/password-error-demo.gif)
+![Enter passcode](/demo/lockscreen.jpg)
 
-**2. Add a New Entry**
+**2. Sign into your account and retrieve previously backed up entries **
 
-![Add new entry](/demo/new-entry-demo.gif)
+![Login](/demo/login.jpg)
+![Backup entries](/demo/settings.jpg)
 
-**3. Edit an Entry**
+**3. Customize app using different color themes **
 
-![Edit entry](/demo/edit-demo.gif)
-
-**4. Delete an Entry**
-
-![Delete entry](/demo/delete-demo.gif)
+![Choose theme](/demo/change-theme.jpg)
+![Orange theme](/demo/main-screen-orange.jpg)
+![Pink theme](/demo/main-screen-pink.jpg)
+![Purple theme](/demo/view-entry.jpg)
 
 ## Built With
 
-* Java, XML in Android Studio
+* Java, XML, Firebase in Android Studio
