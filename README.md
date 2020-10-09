@@ -2,7 +2,7 @@
 
 Simple Diary is a minimalist diary app which can be used to track and record everyday events and experiences. 
 
-A local version of Simple Diary is available on the Google Play Store at https://play.google.com/store/apps/details?id=com.oliviaxie.simplediary 
+Simple Diary (without the data back-up option because I do not have the resources to support this) is available on the Google Play Store at https://play.google.com/store/apps/details?id=com.oliviaxie.simplediary 
 
 ## Features
 
